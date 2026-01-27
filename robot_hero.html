@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RobotHub | Advanced Visualizer</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Framer Motion -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-void: #050505;
+            --accent-acid: #D4FF00;
+        }
+
+        body {
+            background-color: var(--bg-void);
+            color: #EAEAEA;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            /* Prevent scrolling for the hero experience */
+        }
+
+        .font-display {
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+        const { motion, AnimatePresence } = window.Motion;
+
+        // Data configuration
+        const robots = [
+            { id: 'atlas', name: 'ATLAS', company: 'Boston Dynamics', img: './assets/robot_atlas.png' },
+            { id: 'optimus', name: 'OPTIMUS', company: 'Tesla', img: './assets/robot_optimus.png' },
+            { id: 'figure', name: 'FIGURE 02', company: 'Figure AI', img: './assets/robot_figure.png' },
+            { id: 'phoenix', name: 'PHOENIX', company: 'Sanctuary AI', img: './assets/robot_phoenix.png' },
+            { id: 'digit', name: 'DIGIT', company: 'Agility Robotics', img: './assets/robot_digit.png' },
+        ];
+
+        // Variants for animation
+        const cardVariants = {
+            idle: {
+                y: 0,
+                scale: 1,
+                opacity: 1,
+                filter: "grayscale(0%) brightness(1) blur(0px)",
+                zIndex: 10,
+                transition: { duration: 0.4, ease: "easeOut" }
+            },
+            hover: {
+                y: -40,
+                scale: 1.15,
+                opacity: 1,
+                filter: "grayscale(0%) brightness(1.2) contrast(1.1)",
+                zIndex: 50,
+                transition: {
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20
+                }
+            },
+            sibling: {
+                y: 0,
+                scale: 0.95,
+                opacity: 0.35,
+                filter: "grayscale(100%) brightness(0.7) blur(2px)",
+                zIndex: 5,
+                transition: { duration: 0.4, ease: "easeInOut" }
+            }
+        };
+
+        const shadowVariants = {
+            idle: { opacity: 0, scale: 0.8 },
+            hover: {
+                opacity: 0.8,
+                scale: 1.2,
+                transition: { duration: 0.3 }
+            }
+        };
+
+        const RobotCard = ({ robot, hoveredId, setHoveredId }) => {
+            // Determine state based on hoveredId
+            let state = 'idle';
+            if (hoveredId) {
+                state = hoveredId === robot.id ? 'hover' : 'sibling';
+            }
+
+            return (
+                <div
+                    className="relative w-40 md:w-56 h-[600px] flex items-end justify-center group"
+                    onMouseEnter={() => setHoveredId(robot.id)}
+                    onMouseLeave={() => setHoveredId(null)}
+                >
+                    {/* Floor Shadow (Only valid for focused robot) */}
+                    <motion.div
+                        className="absolute bottom-4 w-32 h-6 bg-black rounded-[100%] blur-md z-0"
+                        variants={shadowVariants}
+                        animate={state === 'hover' ? 'hover' : 'idle'}
+                    />
+
+                    {/* Robot Image */}
+                    <motion.img
+                        src={robot.img}
+                        alt={robot.name}
+                        className="relative w-full h-full object-contain origin-bottom cursor-pointer"
+                        variants={cardVariants}
+                        animate={state}
+                        layoutId={`robot-${robot.id}`}
+                    />
+
+                    {/* Hover Label */}
+                    <AnimatePresence>
+                        {state === 'hover' && (
+                            <motion.div
+                                className="absolute bottom-16 pointer-events-none text-center z-50 mix-blend-difference"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 5 }}
+                            >
+                                <h3 className="font-display text-4xl text-[#D4FF00] italic uppercase tracking-wider">{robot.name}</h3>
+                                <p className="font-mono text-xs text-white/80">{robot.company}</p>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [hoveredId, setHoveredId] = useState(null);
+
+            return (
+                <div className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden">
+
+                    {/* Background Vignette / Overlay */}
+                    <motion.div
+                        className="absolute inset-0 bg-black pointer-events-none z-0"
+                        animate={{ opacity: hoveredId ? 0.7 : 0 }}
+                        transition={{ duration: 0.5 }}
+                    />
+
+                    {/* Background Grid Texture */}
+                    <div className="absolute inset-0 z-[-1] opacity-20"
+                        style={{
+                            backgroundImage: 'radial-gradient(#333 1px, transparent 1px)',
+                            backgroundSize: '30px 30px'
+                        }}
+                    />
+
+                    {/* Header */}
+                    <header className="absolute top-10 w-full text-center z-20 pointer-events-none">
+                        <div className="font-mono text-xs text-[#666] mb-2 uppercase tracking-[0.2em]">Fig. 01 — Unit Selection</div>
+                        <h1 className="font-display text-6xl text-[#333] uppercase">Embodied Intelligence</h1>
+                    </header>
+
+                    {/* Main Robot Lineup */}
+                    <div className="flex items-end justify-center gap-4 z-10 w-full max-w-[1400px]">
+                        {robots.map(robot => (
+                            <RobotCard
+                                key={robot.id}
+                                robot={robot}
+                                hoveredId={hoveredId}
+                                setHoveredId={setHoveredId}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Status Bar */}
+                    <div className="absolute bottom-10 w-full px-12 flex justify-between font-mono text-xs text-[#444] uppercase pointer-events-none">
+                        <div>System: Online</div>
+                        <div>Render: Realtime</div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
