@@ -622,42 +622,130 @@
             text-decoration: underline;
         }
 
-        /* Videos Section */
+        /* Videos Section - 3D Rubik's Cube */
         #videos {
             background: var(--bg-dark);
-        }
-
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-
-        .video-card {
-            background: var(--bg-card);
-            border-radius: 12px;
             overflow: hidden;
-            border: 1px solid var(--border);
         }
 
-        .video-wrapper {
+        .cube-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 500px;
+            perspective: 1200px;
+        }
+
+        .cube-wrapper {
             position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
+            width: 400px;
+            height: 280px;
         }
 
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .cube {
             width: 100%;
             height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 20s infinite ease-in-out;
         }
 
-        .video-card h4 {
-            padding: 1rem 1.25rem;
-            font-size: 0.95rem;
+        .cube.paused {
+            animation-play-state: paused;
+        }
+
+        @keyframes rotateCube {
+            0%, 100% { transform: rotateX(-10deg) rotateY(0deg); }
+            25% { transform: rotateX(-10deg) rotateY(90deg); }
+            50% { transform: rotateX(-10deg) rotateY(180deg); }
+            75% { transform: rotateX(-10deg) rotateY(270deg); }
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 400px;
+            height: 280px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cube-face.front { transform: translateZ(200px); }
+        .cube-face.back { transform: rotateY(180deg) translateZ(200px); }
+        .cube-face.left { transform: rotateY(-90deg) translateZ(200px); }
+        .cube-face.right { transform: rotateY(90deg) translateZ(200px); }
+
+        .cube-face iframe {
+            width: 100%;
+            flex: 1;
+            border: none;
+        }
+
+        .cube-face .video-title {
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
+            background: var(--bg-elevated);
+            border-top: 1px solid var(--border);
+        }
+
+        .cube-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .cube-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cube-btn:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+            border-color: var(--accent);
+        }
+
+        .cube-btn.active {
+            background: var(--accent);
+            color: var(--bg-dark);
+            border-color: var(--accent);
+        }
+
+        .cube-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .cube-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cube-dot.active {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
+
+        .cube-dot:hover {
+            background: var(--text-muted);
         }
 
         /* Footer */
@@ -719,10 +807,24 @@
                 gap: 1.5rem;
             }
 
-            .news-grid,
-            .video-grid {
+            .news-grid {
                 grid-template-columns: 1fr;
             }
+
+            .cube-wrapper {
+                width: 300px;
+                height: 210px;
+            }
+
+            .cube-face {
+                width: 300px;
+                height: 210px;
+            }
+
+            .cube-face.front { transform: translateZ(150px); }
+            .cube-face.back { transform: rotateY(180deg) translateZ(150px); }
+            .cube-face.left { transform: rotateY(-90deg) translateZ(150px); }
+            .cube-face.right { transform: rotateY(90deg) translateZ(150px); }
 
             .news-card.featured {
                 grid-column: span 1;
@@ -852,55 +954,55 @@
 
             <div class="news-grid">
                 <article class="news-card featured">
+                    <img src="./news_figure.png" alt="Figure AI" class="news-image">
+                    <div class="news-content">
+                        <span class="news-tag">Breaking · Jan 21</span>
+                        <h3 class="news-title">Figure AI Achieves 400% Efficiency Gain at BMW</h3>
+                        <p class="news-excerpt">Figure 02 robots completed an 11-month deployment at BMW's Spartanburg plant, running daily 10-hour shifts and contributing to 30,000+ vehicles. The Figure 03 fleet now rolling out marks a major expansion of the $39B company's commercial operations.</p>
+                        <a href="https://www.figure.ai/news/production-at-bmw" target="_blank" class="news-link">Read More →</a>
+                    </div>
+                </article>
+
+                <article class="news-card">
                     <img src="./news_atlas.png" alt="Atlas" class="news-image">
                     <div class="news-content">
-                        <span class="news-tag">Breaking</span>
-                        <h3 class="news-title">Boston Dynamics Atlas Enters Production at CES 2026</h3>
-                        <p class="news-excerpt">In a surprise keynote at CES 2026, Boston Dynamics announced the immediate availability of the electric Atlas for commercial partners, backed by a massive Google DeepMind partnership.</p>
-                        <a href="https://bostondynamics.com/atlas/" target="_blank" class="news-link">Read More →</a>
+                        <span class="news-tag">CES 2026 · Jan 6</span>
+                        <h3 class="news-title">Atlas + DeepMind Partnership</h3>
+                        <p class="news-excerpt">Boston Dynamics partners with Google DeepMind to power Atlas with foundational AI. Production begins immediately.</p>
                     </div>
                 </article>
 
                 <article class="news-card">
                     <img src="./news_optimus.png" alt="Optimus" class="news-image">
                     <div class="news-content">
-                        <span class="news-tag">Tesla</span>
-                        <h3 class="news-title">Optimus Gen 3 Mass Production</h3>
-                        <p class="news-excerpt">Fremont lines now outputting 50 units/day with the new 22-DoF hand design.</p>
-                    </div>
-                </article>
-
-                <article class="news-card">
-                    <img src="./news_digit.png" alt="Digit" class="news-image">
-                    <div class="news-content">
-                        <span class="news-tag">Agility</span>
-                        <h3 class="news-title">Digit Hits 100K Totes</h3>
-                        <p class="news-excerpt">GXO Logistics confirms Agility's Digit moved its 100,000th tote with zero failures.</p>
-                    </div>
-                </article>
-
-                <article class="news-card">
-                    <img src="./news_figure.png" alt="Figure" class="news-image">
-                    <div class="news-content">
-                        <span class="news-tag">Finance</span>
-                        <h3 class="news-title">Figure AI Reaches $39B Valuation</h3>
-                        <p class="news-excerpt">New funding round cements Figure as the most valuable private robotics firm.</p>
+                        <span class="news-tag">Tesla · Jan 14</span>
+                        <h3 class="news-title">Optimus Gen 3 at Giga Texas</h3>
+                        <p class="news-excerpt">Tesla deploys Gen 3 Optimus with FSD-v15 neural architecture. Scaling to 100,000 units/year by late 2026.</p>
                     </div>
                 </article>
 
                 <article class="news-card">
                     <img src="./news_neo.png" alt="NEO" class="news-image">
                     <div class="news-content">
-                        <span class="news-tag">Consumer</span>
-                        <h3 class="news-title">1X NEO Pre-orders Sold Out</h3>
-                        <p class="news-excerpt">At $20K, the home assistant robot sold out 10,000 units in 4 hours.</p>
+                        <span class="news-tag">AI · Jan 12</span>
+                        <h3 class="news-title">1X World Model: Self-Learning AI</h3>
+                        <p class="news-excerpt">NEO can now learn tasks by watching videos. First step toward robots teaching themselves anything.</p>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <img src="./news_digit.png" alt="Digit" class="news-image">
+                    <div class="news-content">
+                        <span class="news-tag">Logistics · Dec 2025</span>
+                        <h3 class="news-title">Digit: 140K Totes + Mercado Libre</h3>
+                        <p class="news-excerpt">Agility's Digit hits 140K totes milestone. New deal with Mercado Libre expands to Latin America.</p>
                     </div>
                 </article>
             </div>
         </div>
     </section>
 
-    <!-- Videos Section -->
+    <!-- Videos Section - 3D Cube -->
     <section id="videos">
         <div class="container">
             <div class="section-header">
@@ -908,43 +1010,62 @@
                 <h2 class="section-title">Robot Demos</h2>
             </div>
 
-            <div class="video-grid">
-                <div class="video-card">
-                    <div class="video-wrapper">
-                        <iframe
-                            src="https://www.youtube-nocookie.com/embed/29ECwExc-_M?rel=0"
-                            title="Boston Dynamics Atlas"
-                            frameborder="0"
-                            loading="lazy"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
+            <div class="cube-container">
+                <div class="cube-wrapper">
+                    <div class="cube" id="videoCube">
+                        <div class="cube-face front">
+                            <iframe
+                                src="https://www.youtube-nocookie.com/embed/29ECwExc-_M?rel=0&enablejsapi=1"
+                                title="Boston Dynamics Atlas"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                            <div class="video-title">Boston Dynamics - All New Atlas</div>
+                        </div>
+                        <div class="cube-face right">
+                            <iframe
+                                src="https://www.youtube-nocookie.com/embed/cpraXaw7dyc?rel=0&enablejsapi=1"
+                                title="Tesla Optimus"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                            <div class="video-title">Tesla Optimus Gen 2</div>
+                        </div>
+                        <div class="cube-face back">
+                            <iframe
+                                src="https://www.youtube-nocookie.com/embed/Sq1QZB5baNw?rel=0&enablejsapi=1"
+                                title="Figure 01 + OpenAI"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                            <div class="video-title">Figure 01 + OpenAI Demo</div>
+                        </div>
+                        <div class="cube-face left">
+                            <iframe
+                                src="https://www.youtube-nocookie.com/embed/RhzRjmwiVXA?rel=0&enablejsapi=1"
+                                title="Agility Digit"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                            <div class="video-title">Agility Robotics - Digit</div>
+                        </div>
                     </div>
-                    <h4>Boston Dynamics - All New Atlas</h4>
                 </div>
-                <div class="video-card">
-                    <div class="video-wrapper">
-                        <iframe
-                            src="https://www.youtube-nocookie.com/embed/cpraXaw7dyc?rel=0"
-                            title="Tesla Optimus"
-                            frameborder="0"
-                            loading="lazy"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
-                    </div>
-                    <h4>Tesla Optimus Gen 2</h4>
-                </div>
-                <div class="video-card">
-                    <div class="video-wrapper">
-                        <iframe
-                            src="https://www.youtube-nocookie.com/embed/Sq1QZB5baNw?rel=0"
-                            title="Figure 01 + OpenAI"
-                            frameborder="0"
-                            loading="lazy"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
-                    </div>
-                    <h4>Figure 01 + OpenAI Demo</h4>
-                </div>
+            </div>
+
+            <div class="cube-controls">
+                <button class="cube-btn" onclick="rotateTo(0)">Atlas</button>
+                <button class="cube-btn" onclick="rotateTo(1)">Optimus</button>
+                <button class="cube-btn" onclick="rotateTo(2)">Figure</button>
+                <button class="cube-btn" onclick="rotateTo(3)">Digit</button>
+                <button class="cube-btn" id="pauseBtn" onclick="togglePause()">Pause</button>
+            </div>
+
+            <div class="cube-indicators">
+                <div class="cube-dot active" data-index="0"></div>
+                <div class="cube-dot" data-index="1"></div>
+                <div class="cube-dot" data-index="2"></div>
+                <div class="cube-dot" data-index="3"></div>
             </div>
         </div>
     </section>
@@ -1173,7 +1294,7 @@
 
         // Section animations
         gsap.utils.toArray('section:not(.hero)').forEach(section => {
-            gsap.from(section.querySelectorAll('.section-header, .robot-showcase, .news-grid, .video-grid'), {
+            gsap.from(section.querySelectorAll('.section-header, .robot-showcase, .news-grid, .cube-container'), {
                 scrollTrigger: {
                     trigger: section,
                     start: 'top 80%',
@@ -1184,6 +1305,75 @@
                 duration: 0.8,
                 stagger: 0.2
             });
+        });
+
+        // Video Cube Controls
+        const cube = document.getElementById('videoCube');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const dots = document.querySelectorAll('.cube-dot');
+        let isPaused = false;
+        let currentFace = 0;
+
+        function rotateTo(index) {
+            isPaused = true;
+            cube.classList.add('paused');
+            pauseBtn.textContent = 'Play';
+            pauseBtn.classList.add('active');
+
+            const rotations = [0, -90, -180, -270];
+            cube.style.transform = `rotateX(-10deg) rotateY(${rotations[index]}deg)`;
+            currentFace = index;
+            updateDots(index);
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            if (isPaused) {
+                cube.classList.add('paused');
+                pauseBtn.textContent = 'Play';
+                pauseBtn.classList.add('active');
+            } else {
+                cube.classList.remove('paused');
+                cube.style.transform = '';
+                pauseBtn.textContent = 'Pause';
+                pauseBtn.classList.remove('active');
+            }
+        }
+
+        function updateDots(index) {
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        // Update dots based on animation
+        function trackRotation() {
+            if (isPaused) return;
+
+            const style = window.getComputedStyle(cube);
+            const transform = style.transform;
+
+            if (transform && transform !== 'none') {
+                const values = transform.split('(')[1].split(')')[0].split(',');
+                const a = parseFloat(values[0]);
+                const b = parseFloat(values[1]);
+                const angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+
+                let normalizedAngle = ((angle % 360) + 360) % 360;
+                let faceIndex = Math.floor(normalizedAngle / 90) % 4;
+
+                if (faceIndex !== currentFace) {
+                    currentFace = faceIndex;
+                    updateDots(faceIndex);
+                }
+            }
+        }
+
+        setInterval(trackRotation, 500);
+
+        // Click on dots to navigate
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => rotateTo(index));
         });
     </script>
 </body>
