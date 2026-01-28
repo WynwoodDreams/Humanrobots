@@ -627,6 +627,27 @@
             line-height: 1.6;
         }
 
+        /* Bento Grid Layout for News */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .featured-news {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .featured-news .news-image-placeholder img {
+            height: 300px;
+        }
+
+        .medium-news .news-image-placeholder img {
+            height: 150px;
+        }
+
         /* Info Card Enhancements in JS rendered HTML */
         .robot-description {
             color: var(--text-secondary);
@@ -791,32 +812,32 @@
                     <!-- Placeholder, user needs to ensure this image exists or is updated -->
                     <img src="./robot_lineup.png" alt="Humanoid Robots Lineup">
 
-                    <!-- Hover Zones - Positioned via % (Estimated based on 9 robots) -->
-                    <div class="hover-zone" style="left: 1%; width: 10%;" data-id="figure02">
+                    <!-- Hover Zones - Positioned precisely based on robot_lineup.png -->
+                    <div class="hover-zone" style="left: 0%; width: 10%;" data-id="figure02">
                         <span class="hover-tooltip">Figure 02</span>
                     </div>
-                    <div class="hover-zone" style="left: 12%; width: 10%;" data-id="phoenix">
+                    <div class="hover-zone" style="left: 10%; width: 9%;" data-id="phoenix">
                         <span class="hover-tooltip">Phoenix</span>
                     </div>
-                    <div class="hover-zone" style="left: 23%; width: 10%;" data-id="atlas">
+                    <div class="hover-zone" style="left: 19%; width: 9%;" data-id="atlas">
                         <span class="hover-tooltip">Atlas</span>
                     </div>
-                    <div class="hover-zone" style="left: 34%; width: 10%;" data-id="gr1">
+                    <div class="hover-zone" style="left: 28%; width: 9%;" data-id="gr1">
                         <span class="hover-tooltip">GR-1</span>
                     </div>
-                    <div class="hover-zone" style="left: 45%; width: 10%;" data-id="digit">
+                    <div class="hover-zone" style="left: 37%; width: 8%;" data-id="digit">
                         <span class="hover-tooltip">Digit</span>
                     </div>
-                    <div class="hover-zone" style="left: 56%; width: 10%;" data-id="eve">
+                    <div class="hover-zone" style="left: 45%; width: 7%;" data-id="eve">
                         <span class="hover-tooltip">EVE</span>
                     </div>
-                    <div class="hover-zone" style="left: 67%; width: 10%;" data-id="neo">
+                    <div class="hover-zone" style="left: 52%; width: 11%;" data-id="neo">
                         <span class="hover-tooltip">NEO</span>
                     </div>
-                    <div class="hover-zone" style="left: 78%; width: 10%;" data-id="optimus">
+                    <div class="hover-zone" style="left: 63%; width: 13%;" data-id="optimus">
                         <span class="hover-tooltip">Optimus Gen 3</span>
                     </div>
-                    <div class="hover-zone" style="left: 89%; width: 10%;" data-id="apollo">
+                    <div class="hover-zone" style="left: 76%; width: 14%;" data-id="apollo">
                         <span class="hover-tooltip">Apollo</span>
                     </div>
                 </div>
@@ -856,7 +877,7 @@
                         <p class="news-excerpt">In a surprise keynote at CES 2026, Boston Dynamics announced the
                             immediate availability of the electric Atlas for commercial partners, backed by a massive
                             Google DeepMind partnership to power its reasoning core.</p>
-                        <a href="#" style="text-decoration: underline; color: var(--accent-acid);">Read Full Story →</a>
+                        <a href="https://bostondynamics.com/atlas/" target="_blank" style="text-decoration: underline; color: var(--accent-acid);">Read Full Story →</a>
                     </div>
                 </article>
 
@@ -922,28 +943,39 @@
             <div class="video-grid">
                 <div class="video-card">
                     <div class="video-wrapper">
-                        <!-- Using generic IDs for demo purposes -->
-                        <iframe src="https://www.youtube.com/embed/29ECwExc-_M" title="Boston Dynamics Atlas"
+                        <iframe
+                            src="https://www.youtube-nocookie.com/embed/29ECwExc-_M?rel=0&modestbranding=1"
+                            title="Boston Dynamics Atlas"
                             frameborder="0"
+                            loading="lazy"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
                             allowfullscreen></iframe>
                     </div>
                     <h4 style="margin-top: 1rem;">Boston Dynamics "All New Atlas"</h4>
                 </div>
                 <div class="video-card">
                     <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/cpraXaw7dyc" title="Tesla Optimus Gen 2"
+                        <iframe
+                            src="https://www.youtube-nocookie.com/embed/cpraXaw7dyc?rel=0&modestbranding=1"
+                            title="Tesla Optimus Gen 2"
                             frameborder="0"
+                            loading="lazy"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
                             allowfullscreen></iframe>
                     </div>
                     <h4 style="margin-top: 1rem;">Tesla Optimus Gen 2</h4>
                 </div>
                 <div class="video-card">
                     <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/Sq1QZB5baNw" title="Figure 01 OpenAI Demo"
+                        <iframe
+                            src="https://www.youtube-nocookie.com/embed/Sq1QZB5baNw?rel=0&modestbranding=1"
+                            title="Figure 01 OpenAI Demo"
                             frameborder="0"
+                            loading="lazy"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
                             allowfullscreen></iframe>
                     </div>
                     <h4 style="margin-top: 1rem;">Figure 01 + OpenAI Demo</h4>
@@ -1023,8 +1055,8 @@
                 theme: "theme-prototype",
                 description: "Specialized for rehabilitation and elderly care with high payload capacity. Capable of carrying patients from bed to wheelchair.",
                 links: {
-                    news: "https://www.fftai.com/",
-                    video: "https://www.youtube.com/watch?v=9t-9sZ5s5sA"
+                    news: "https://www.fftai.com/products-gr1",
+                    video: "https://www.youtube.com/results?search_query=Fourier+GR-1+humanoid+robot"
                 },
                 specs: { height: "1.65m", weight: "55kg", payload: "50kg", dof: "44" },
                 metrics: { speed: 40, battery: 80 },
@@ -1055,8 +1087,8 @@
                 theme: "theme-pilot",
                 description: "Wheeled android designed for security and guarding tasks. Deployed commercially with ADT for patrolling and surveillance duties.",
                 links: {
-                    news: "https://www.1x.tech/",
-                    video: "https://www.youtube.com/watch?v=Xh1e5g7y7Zc"
+                    news: "https://www.1x.tech/eve",
+                    video: "https://www.youtube.com/results?search_query=1X+Technologies+EVE+robot+demo"
                 },
                 specs: { height: "1.86m", weight: "86kg", payload: "15kg", dof: "28" },
                 metrics: { speed: 90, battery: 90 },
@@ -1067,14 +1099,14 @@
                 emoji: "🏠",
                 company: "1X Technologies",
                 valuation: "Series B",
-                status: "Prototype", // Pre-order phase
+                status: "Pre-order",
                 theme: "theme-prototype",
                 description: "Consumer-focused android with soft outer shell for safety. Designed for home assistance tasks like cleaning and organizing.",
                 links: {
                     news: "https://www.1x.tech/neo",
-                    video: "https://www.youtube.com/watch?v=4s5s5s5s5s5" // Placeholder if specific one not found, checking verified one
+                    video: "https://www.youtube.com/results?search_query=1X+NEO+humanoid+robot+home"
                 },
-                specs: { height: "1.65m", weight: "30kg", payload: "10kg", dof: "Undefined" },
+                specs: { height: "1.65m", weight: "30kg", payload: "10kg", dof: "37" },
                 metrics: { speed: 65, battery: 60 },
                 tags: ["Consumer ($20k)", "Soft Shell", "Safety First"]
             },
@@ -1104,10 +1136,10 @@
                 description: "NASA-heritage design built for mass manufacturability. Modular tooling allows it to adapt to various industrial tasks.",
                 links: {
                     news: "https://apptronik.com/apollo",
-                    video: "https://www.youtube.com/watch?v=H7y7y7y7y7y"
+                    video: "https://www.youtube.com/results?search_query=Apptronik+Apollo+humanoid+robot"
                 },
                 specs: { height: "1.73m", weight: "73kg", payload: "25kg", dof: "30+" },
-                metrics: { speed: 70, battery: "4h" },
+                metrics: { speed: 70, battery: 75 },
                 tags: ["NASA Heritage", "Mercedes Partner", "Modular"]
             }
         };
