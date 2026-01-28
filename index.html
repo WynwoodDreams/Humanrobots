@@ -4,305 +4,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RobotHub | The Rise of Humanoid Robots 2026</title>
+    <title>RobotHub | The Future of Humanoid Robots</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Oswald:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
         :root {
-            /* Palette: Acid & Asphalt */
-            --bg-void: #0a0a0a;
-            --bg-asphalt: #141414;
-            --bg-panel: #1a1a1a;
-
-            --text-main: #EAEAEA;
-            --text-muted: #888888;
-            --text-data: #666666;
-
-            --accent-acid: #D4FF00;
-            --accent-alert: #FF2A00;
-            --accent-electric: #00F0FF;
-
-            --border-raw: #333333;
-            --border-light: #444444;
-
-            --font-display: 'Oswald', sans-serif;
-            --font-body: 'Inter', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-
-            --grid-unit: 1rem;
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-elevated: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --accent: #00d4ff;
+            --accent-green: #00ff88;
+            --accent-orange: #ff6b35;
+            --border: #222222;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: crosshair;
-            /* Experimental feel */
         }
 
-        ::selection {
-            background: var(--accent-acid);
-            color: black;
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-void);
-            color: var(--text-main);
-            font-family: var(--font-body);
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            line-height: 1.5;
-            /* Subtle grain texture overlay */
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-
-        /* Typography Override */
-        h1,
-        h2,
-        h3,
-        h4,
-        .section-title {
-            font-family: var(--font-display);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .mono {
-            font-family: var(--font-mono);
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 1600px;
-            /* Wider layout */
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 4vw;
+            padding: 0 2rem;
         }
 
-        /* Raw/Brutalist Utility Classes */
-        .decoration-line {
-            height: 1px;
-            background: var(--border-raw);
-            width: 100%;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .decoration-line::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: -2px;
-            width: 20px;
-            height: 5px;
-            background: var(--accent-acid);
-        }
-
-        /* Glitch Hover Effect Utility */
-        .glitch-hover {
-            position: relative;
-            transition: all 0.2s;
-        }
-
-        .glitch-hover:hover {
-            color: var(--accent-acid);
-            text-shadow: 2px 0 var(--accent-alert), -2px 0 var(--accent-electric);
-        }
-
-        /* Header Redesign */
-        header {
+        /* Navigation */
+        nav {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--border-raw);
             padding: 1.5rem 0;
+            background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0) 100%);
+            transition: background 0.3s ease;
         }
 
-        .header-content {
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-family: var(--font-mono);
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: var(--text-main);
-            border: 1px solid var(--border-raw);
-            padding: 0.5rem 1rem;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
         }
 
         .logo span {
-            color: var(--accent-acid);
+            color: var(--accent);
         }
 
         .nav-links {
             display: flex;
-            gap: 3rem;
-            font-family: var(--font-mono);
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+            gap: 2.5rem;
+            list-style: none;
         }
 
         .nav-links a {
-            color: var(--text-muted);
-            transition: color 0.2s;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
             position: relative;
         }
 
         .nav-links a:hover {
-            color: var(--accent-acid);
-        }
-
-        .nav-links a::before {
-            content: '[ ';
-            opacity: 0;
-            transition: opacity 0.2s;
-            color: var(--accent-acid);
+            color: var(--text-primary);
         }
 
         .nav-links a::after {
-            content: ' ]';
-            opacity: 0;
-            transition: opacity 0.2s;
-            color: var(--accent-acid);
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
         }
 
-        .nav-links a:hover::before,
         .nav-links a:hover::after {
-            opacity: 1;
+            width: 100%;
         }
 
-
-        .badge-live {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--accent-alert);
-            border: 1px solid var(--accent-alert);
-            padding: 0.25rem 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 42, 0, 0.1);
-        }
-
-        .pulsing-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent-alert);
-            box-shadow: 0 0 10px var(--accent-alert);
-        }
-
-        @keyframes pulse-red {
-            0% {
-                box-shadow: 0 0 0 0 rgba(255, 42, 0, 0.4);
-            }
-
-            70% {
-                box-shadow: 0 0 0 6px rgba(255, 42, 0, 0);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 rgba(255, 42, 0, 0);
-            }
-        }
-
-        /* Hero Redesign - Asymmetrical */
+        /* Hero Section */
         .hero {
-            padding: 8rem 0 4rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             position: relative;
             overflow: hidden;
-            border-bottom: 1px solid var(--border-raw);
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+            opacity: 0.4;
+            filter: saturate(0.8);
+        }
+
+        .hero-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(10, 10, 10, 0.3) 0%,
+                rgba(10, 10, 10, 0.5) 50%,
+                rgba(10, 10, 10, 1) 100%
+            );
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding-top: 8rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
         }
 
         .hero h1 {
-            font-size: 8vw;
-            line-height: 0.85;
-            color: var(--text-main);
-            max-width: 90%;
-            margin-bottom: 2rem;
-            mix-blend-mode: exclusion;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
         }
 
-        .hero-meta {
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-stats {
             display: flex;
-            gap: 2rem;
-            font-family: var(--font-mono);
-            color: var(--text-muted);
-            border-left: 2px solid var(--accent-acid);
-            padding-left: 1.5rem;
+            gap: 3rem;
             margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
         }
 
-        /* Interactive Section */
-        .interactive-section {
+        .hero-stat {
+            text-align: left;
+        }
+
+        .hero-stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .hero-stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* Section Styles */
+        section {
             padding: 6rem 0;
         }
 
-        .interactive-grid {
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        /* Robot Showcase Section */
+        #robots {
+            background: var(--bg-dark);
+        }
+
+        .robot-showcase {
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 4rem;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 3rem;
             align-items: start;
         }
 
-        /* Robot Stage */
-        .robot-stage-wrapper {
+        .robot-image-wrapper {
             position: relative;
-            background: var(--bg-asphalt);
-            border: 1px solid var(--border-raw);
-            padding: 1rem;
-            /* Decorative corners */
-            clip-path: polygon(0 0,
-                    100% 0,
-                    100% calc(100% - 20px),
-                    calc(100% - 20px) 100%,
-                    0 100%);
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--bg-card);
         }
 
-        .robot-stage-wrapper::before {
-            content: 'FIG. 01 // LINEUP';
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--accent-acid);
-            z-index: 10;
-        }
-
-        .robot-image-container {
-            position: relative;
-            background: radial-gradient(circle at center, #222 0%, #000 100%);
-            border: 1px solid var(--border-raw);
-            min-height: 400px;
-        }
-
-        .robot-image-container img {
+        .robot-image-wrapper img {
             width: 100%;
             display: block;
-            filter: grayscale(80%) contrast(120%);
-            transition: filter 0.3s;
+            transition: transform 0.5s ease;
         }
 
-        .robot-image-container:hover img {
-            filter: grayscale(0%) contrast(110%);
+        .robot-image-wrapper:hover img {
+            transform: scale(1.02);
         }
 
         .hover-zone {
@@ -310,419 +324,326 @@
             top: 5%;
             height: 90%;
             z-index: 10;
-            border: 1px solid transparent;
-            transition: all 0.1s;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border-radius: 8px;
         }
 
         .hover-zone:hover {
-            border: 1px solid var(--accent-acid);
-            background: rgba(212, 255, 0, 0.05);
-            cursor: pointer;
+            border-color: var(--accent);
+            background: rgba(0, 212, 255, 0.1);
         }
 
         .hover-tooltip {
-            background: var(--accent-acid);
-            color: black;
-            font-family: var(--font-mono);
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0;
-            /* Sharp edges */
-            bottom: -30px;
             position: absolute;
+            bottom: 20px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(10px);
+            background: var(--accent);
+            color: var(--bg-dark);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.2s;
+            transition: all 0.2s ease;
         }
 
         .hover-zone:hover .hover-tooltip {
             opacity: 1;
-            bottom: 10px;
+            transform: translateX(-50%) translateY(0);
         }
 
-        /* Stats Panel - HUD Style */
-        .stats-panel-sticky {
+        /* Stats Panel */
+        .stats-panel {
             position: sticky;
-            top: 8rem;
-            overflow: hidden;
-            /* Clip the slide-in animation */
-            min-height: 400px;
-            /* Ensure space for card */
-        }
-
-        .glass-panel {
-            background: var(--bg-panel);
-            backdrop-filter: none;
-            /* Removed blur for raw look */
-            border: 1px solid var(--border-light);
-            box-shadow: none;
-            border-radius: 0;
-            padding: 0;
+            top: 100px;
         }
 
         .robot-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             padding: 2rem;
-            border: 1px solid var(--border-raw);
-            position: relative;
-            background:
-                linear-gradient(90deg, var(--bg-panel) 21px, transparent 1%) center,
-                linear-gradient(var(--bg-panel) 21px, transparent 1%) center,
-                #222;
-            background-size: 22px 22px;
-            height: 100%;
-            animation: slide-in-bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: slideUp 0.4s ease;
         }
 
-        @keyframes slide-in-bottom {
-            from {
-                transform: translateY(100%);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* HUD Corner Markers */
-        .robot-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border: 1px solid transparent;
-            /* Imitating corner brackets with distinct borders is complex, simplify */
-            box-shadow: inset 0 0 0 1px var(--border-raw);
-            pointer-events: none;
+        .robot-card-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
         }
 
-        .robot-header {
-            border-bottom: 2px solid var(--text-main);
-            padding-bottom: 1rem;
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .robot-title h2 {
-            font-size: 2.5rem;
-            line-height: 1;
+        .robot-card h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
             margin-bottom: 0.5rem;
-        }
-
-        .robot-avatar {
-            display: none;
-            /* Hide emoji for serious look */
         }
 
         .robot-company {
-            font-family: var(--font-mono);
-            color: var(--accent-acid);
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
         }
 
         .status-badge {
-            background: transparent !important;
-            border: 1px solid currentColor !important;
-            border-radius: 0 !important;
-            font-family: var(--font-mono);
-            padding: 0.25rem 0.5rem;
-            font-size: 0.7rem;
-            text-transform: uppercase;
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
 
-        /* Theme Overrides for HUD */
-        .theme-production .status-badge {
-            color: var(--accent-acid) !important;
-            border-color: var(--accent-acid) !important;
-        }
+        .status-production { background: rgba(0, 255, 136, 0.15); color: var(--accent-green); }
+        .status-pilot { background: rgba(0, 212, 255, 0.15); color: var(--accent); }
+        .status-prototype { background: rgba(255, 107, 53, 0.15); color: var(--accent-orange); }
 
-        .theme-pilot .status-badge {
-            color: var(--accent-electric) !important;
-            border-color: var(--accent-electric) !important;
-        }
-
-        .theme-prototype .status-badge {
-            color: var(--accent-alert) !important;
-            border-color: var(--accent-alert) !important;
-        }
-
-        .specs-grid {
-            border-top: 1px solid var(--border-raw);
-            border-left: 1px solid var(--border-raw);
-            background: var(--bg-void);
-            gap: 0;
-            /* Continuous grid */
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            margin-bottom: 2rem;
-        }
-
-        .spec-item {
-            background: transparent;
-            border-right: 1px solid var(--border-raw);
-            border-bottom: 1px solid var(--border-raw);
-            border-radius: 0;
-            padding: 1rem;
-        }
-
-        .spec-label {
-            font-family: var(--font-mono);
-            color: var(--text-data);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            margin-bottom: 0.25rem;
-        }
-
-        .spec-value {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            color: var(--text-main);
-        }
-
-        /* Metrics Bar - Solid blocks */
-        .progress-bar {
-            background: var(--bg-void);
-            border: 1px solid var(--border-raw);
-            height: 12px;
-            border-radius: 0;
-            margin-bottom: 1rem;
-        }
-
-        .progress-fill {
-            background: var(--text-main);
-            /* Default to white/grey */
-            border-radius: 0;
-            /* Striped pattern via CSS gradient */
-            background-image: linear-gradient(45deg, rgba(0, 0, 0, .15) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .15) 50%, rgba(0, 0, 0, .15) 75%, transparent 75%, transparent);
-            background-size: 1rem 1rem;
-            height: 100%;
-            transition: width 1s ease;
-        }
-
-        .theme-production .progress-fill {
-            background-color: var(--accent-acid);
-        }
-
-        .theme-pilot .progress-fill {
-            background-color: var(--accent-electric);
-        }
-
-        .theme-prototype .progress-fill {
-            background-color: var(--accent-alert);
-        }
-
-        .capabilities {
-            gap: 0.5rem;
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
-
-        .tag {
-            background: transparent;
-            border: 1px solid var(--text-data);
-            color: var(--text-data);
-            font-family: var(--font-mono);
-            border-radius: 0;
-            padding: 0.2rem 0.5rem;
-            font-size: 0.8rem;
-        }
-
-        /* Links Buttons - Brutalist */
-        .link-btn {
-            border-radius: 0;
-            border: 1px solid var(--text-main);
-            background: transparent;
-            color: var(--text-main);
-            font-family: var(--font-mono);
-            text-transform: uppercase;
-            padding: 1rem;
-            text-align: center;
-            display: block;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.2s;
-        }
-
-        .link-btn:hover {
-            background: var(--text-main);
-            color: var(--bg-void);
-        }
-
-        .link-video {
-            border-color: var(--accent-alert);
-            color: var(--accent-alert);
-        }
-
-        .link-video:hover {
-            background: var(--accent-alert);
-            color: var(--bg-void);
-            border-color: var(--accent-alert);
-        }
-
-        /* News - Asymmetrical */
-        .news-section {
-            background: var(--bg-asphalt);
-            padding: 8rem 0;
-            border-top: 1px solid var(--border-raw);
-        }
-
-        .news-card {
-            border-radius: 0;
-            border: 1px solid var(--border-raw);
-            background: var(--bg-void);
-            transition: border-color 0.2s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .news-image-placeholder img {
-            filter: grayscale(100%);
-            transition: filter 0.3s;
-        }
-
-        .news-card:hover .news-image-placeholder img {
-            filter: grayscale(0%);
-        }
-
-        .news-card:hover {
-            transform: none;
-            border-color: var(--text-main);
-        }
-
-        .news-content {
-            padding: 2rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .news-tag {
-            font-family: var(--font-mono);
-            color: var(--accent-acid);
-            border-left: 2px solid var(--accent-acid);
-            padding-left: 0.5rem;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-
-        .news-title {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-main);
-        }
-
-        .news-excerpt {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        /* Bento Grid Layout for News */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .featured-news {
-            grid-column: span 2;
-            grid-row: span 2;
-        }
-
-        .featured-news .news-image-placeholder img {
-            height: 300px;
-        }
-
-        .medium-news .news-image-placeholder img {
-            height: 150px;
-        }
-
-        /* Info Card Enhancements in JS rendered HTML */
         .robot-description {
             color: var(--text-secondary);
             font-size: 0.95rem;
             margin-bottom: 1.5rem;
-            line-height: 1.6;
-            font-family: var(--font-body);
+            line-height: 1.7;
         }
 
-        .robot-links {
-            display: flex;
+        .specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 1rem;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-raw);
+            margin-bottom: 1.5rem;
+        }
+
+        .spec-item {
+            background: var(--bg-elevated);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .spec-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .spec-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .metrics-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .metric {
+            margin-bottom: 1rem;
         }
 
         .metric-header {
             display: flex;
             justify-content: space-between;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 0.3rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
         }
 
-        /* Footer */
-        footer {
-            background: var(--bg-void);
-            border-top: 1px solid var(--border-raw);
-            color: var(--text-muted);
-            padding: 4rem 0;
-            font-family: var(--font-mono);
+        .metric-label { color: var(--text-secondary); }
+        .metric-value { color: var(--text-primary); font-weight: 600; }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--bg-elevated);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.8s ease;
+        }
+
+        .progress-fill.green { background: var(--accent-green); }
+        .progress-fill.blue { background: var(--accent); }
+        .progress-fill.orange { background: var(--accent-orange); }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+
+        .robot-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            background: #00e5ff;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+            transform: translateY(-2px);
         }
 
         .stats-placeholder {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 400px;
-            color: var(--text-muted);
             text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
         }
 
-        .hand-bounce {
-            font-size: 3rem;
-            animation: bounce-left 1.5s infinite;
+        .stats-placeholder h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
         }
 
-        /* Video Section */
-        .video-section {
-            padding: 4rem 0;
-            background-color: var(--bg-void);
-            border-top: 1px solid var(--border-raw);
+        /* News Section */
+        #news {
+            background: var(--bg-card);
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .news-card {
+            background: var(--bg-dark);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .news-card.featured {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-card.featured .news-image {
+            height: 300px;
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .news-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .news-card.featured .news-title {
+            font-size: 1.5rem;
+        }
+
+        .news-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .news-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .news-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Videos Section */
+        #videos {
+            background: var(--bg-dark);
         }
 
         .video-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
-        .video-card h4 {
-            font-family: var(--font-mono);
-            color: var(--text-main);
-            margin-top: 1rem;
-            font-size: 1rem;
+        .video-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
         }
 
         .video-wrapper {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
-            border: 1px solid var(--border-raw);
         }
 
         .video-wrapper iframe {
@@ -733,86 +654,151 @@
             height: 100%;
         }
 
+        .video-card h4 {
+            padding: 1rem 1.25rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
-            .interactive-grid {
+            .robot-showcase {
                 grid-template-columns: 1fr;
             }
 
-            .stats-panel-sticky {
+            .stats-panel {
                 position: relative;
                 top: 0;
-                margin-top: 2rem;
             }
 
-            .bento-grid {
+            .news-grid {
                 grid-template-columns: 1fr 1fr;
             }
 
-            .featured-news {
+            .news-card.featured {
                 grid-column: span 2;
+                grid-row: span 1;
             }
         }
 
         @media (max-width: 768px) {
-            .bento-grid {
-                grid-template-columns: 1fr;
+            .nav-links {
+                display: none;
             }
 
-            .featured-news {
-                grid-column: span 1;
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
             }
 
+            .news-grid,
             .video-grid {
                 grid-template-columns: 1fr;
             }
 
-            .nav-links {
-                display: none;
+            .news-card.featured {
+                grid-column: span 1;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
             }
         }
     </style>
 </head>
 
 <body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo">Robot<span>Hub</span></a>
+            <ul class="nav-links">
+                <li><a href="#robots">Robots</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#videos">Videos</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <!-- Header -->
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <span>//</span> ROBOT_HUB [BETA]
-            </div>
-            <nav class="nav-links">
-                <a href="#inventory">Inventory</a>
-                <a href="#intel">Intel</a>
-                <a href="#vision">Vision</a>
-            </nav>
-            <div class="badge badge-live">
-                <div class="pulsing-dot"></div>
-                SYSTEM ONLINE
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <img src="./robot_lineup.png" alt="Humanoid Robots">
+            <div class="hero-gradient"></div>
+        </div>
+        <div class="container hero-content">
+            <div class="hero-badge">Live Updates</div>
+            <h1>The Future of<br><span>Humanoid Robots</span></h1>
+            <p class="hero-description">
+                Explore the most advanced humanoid robots from leading companies worldwide.
+                From factory floors to your living room, the robotic revolution is here.
+            </p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">9</div>
+                    <div class="hero-stat-label">Featured Robots</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">$50B+</div>
+                    <div class="hero-stat-label">Industry Valuation</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">2026</div>
+                    <div class="hero-stat-label">Mass Production Era</div>
+                </div>
             </div>
         </div>
-    </header>
-
-    <!-- Hero -->
-    <section class="hero">
-        <div class="decoration-line"></div>
-        <div class="container">
-            <h1>EMBODIED<br>INTELLIGENCE</h1>
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
         </div>
     </section>
 
-    <!-- Main Interactive Section -->
-    <section class="interactive-section" id="inventory">
-        <div class="container interactive-grid">
+    <!-- Robot Showcase -->
+    <section id="robots">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Interactive Showcase</div>
+                <h2 class="section-title">Meet the Robots</h2>
+            </div>
 
-            <!-- Left: Robot Image & Hover Zones -->
-            <div class="robot-stage-wrapper">
-                <div class="robot-image-container">
-                    <!-- Placeholder, user needs to ensure this image exists or is updated -->
+            <div class="robot-showcase">
+                <div class="robot-image-wrapper">
                     <img src="./robot_lineup.png" alt="Humanoid Robots Lineup">
 
-                    <!-- Hover Zones - Positioned precisely based on robot_lineup.png -->
+                    <!-- Hover Zones -->
                     <div class="hover-zone" style="left: 0%; width: 10%;" data-id="figure02">
                         <span class="hover-tooltip">Figure 02</span>
                     </div>
@@ -835,336 +821,277 @@
                         <span class="hover-tooltip">NEO</span>
                     </div>
                     <div class="hover-zone" style="left: 63%; width: 13%;" data-id="optimus">
-                        <span class="hover-tooltip">Optimus Gen 3</span>
+                        <span class="hover-tooltip">Optimus</span>
                     </div>
                     <div class="hover-zone" style="left: 76%; width: 14%;" data-id="apollo">
                         <span class="hover-tooltip">Apollo</span>
                     </div>
                 </div>
 
-
-            </div>
-
-            <!-- Right: Stats Panel -->
-            <div class="stats-panel-sticky glass-panel">
-                <div id="stats-content">
-                    <!-- Default State -->
-                    <div class="stats-placeholder">
-                        <div class="hand-bounce" style="color:var(--accent-acid)">◀</div>
-                        <h3>INITIALIZE DATA STREAM</h3>
-                        <p class="mono">HOVER TARGET TO SCAN</p>
+                <div class="stats-panel">
+                    <div id="stats-content">
+                        <div class="robot-card">
+                            <div class="stats-placeholder">
+                                <h3>Select a Robot</h3>
+                                <p>Hover over the image to view detailed specifications</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
     <!-- News Section -->
-    <section class="news-section" id="intel">
+    <section id="news">
         <div class="container">
-            <h2 class="section-title">📰 // SECTOR_NEWS</h2>
+            <div class="section-header">
+                <div class="section-label">Latest Updates</div>
+                <h2 class="section-title">Industry News</h2>
+            </div>
 
-            <div class="bento-grid">
-                <!-- Featured -->
-                <article class="news-card featured-news">
-                    <div class="news-image-placeholder">
-                        <img src="./news_atlas.png" style="width:100%; height:100%; object-fit:cover;">
-                    </div>
+            <div class="news-grid">
+                <article class="news-card featured">
+                    <img src="./news_atlas.png" alt="Atlas" class="news-image">
                     <div class="news-content">
-                        <div class="news-tag">Breaking News</div>
-                        <h3 class="news-title">Boston Dynamics Atlas Production Launch at CES 2026</h3>
-                        <p class="news-excerpt">In a surprise keynote at CES 2026, Boston Dynamics announced the
-                            immediate availability of the electric Atlas for commercial partners, backed by a massive
-                            Google DeepMind partnership to power its reasoning core.</p>
-                        <a href="https://bostondynamics.com/atlas/" target="_blank" style="text-decoration: underline; color: var(--accent-acid);">Read Full Story →</a>
+                        <span class="news-tag">Breaking</span>
+                        <h3 class="news-title">Boston Dynamics Atlas Enters Production at CES 2026</h3>
+                        <p class="news-excerpt">In a surprise keynote at CES 2026, Boston Dynamics announced the immediate availability of the electric Atlas for commercial partners, backed by a massive Google DeepMind partnership.</p>
+                        <a href="https://bostondynamics.com/atlas/" target="_blank" class="news-link">Read More →</a>
                     </div>
                 </article>
 
-                <!-- 2 -->
-                <article class="news-card medium-news">
-                    <div class="news-image-placeholder">
-                        <img src="./news_optimus.png" style="width:100%; height:100%; object-fit:cover;">
-                    </div>
+                <article class="news-card">
+                    <img src="./news_optimus.png" alt="Optimus" class="news-image">
                     <div class="news-content">
-                        <div class="news-tag">Tesla</div>
+                        <span class="news-tag">Tesla</span>
                         <h3 class="news-title">Optimus Gen 3 Mass Production</h3>
-                        <p class="news-excerpt">Fremont lines are now outputting 50 units/day with the new 22-DoF hand
-                            design.</p>
+                        <p class="news-excerpt">Fremont lines now outputting 50 units/day with the new 22-DoF hand design.</p>
                     </div>
                 </article>
 
-                <!-- 3 -->
-                <article class="news-card medium-news">
-                    <div class="news-image-placeholder">
-                        <img src="./news_digit.png" style="width:100%; height:100%; object-fit:cover;">
-                    </div>
+                <article class="news-card">
+                    <img src="./news_digit.png" alt="Digit" class="news-image">
                     <div class="news-content">
-                        <div class="news-tag">Agility</div>
+                        <span class="news-tag">Agility</span>
                         <h3 class="news-title">Digit Hits 100K Totes</h3>
-                        <p class="news-excerpt">GXO Logistics confirms Agility's Digit has moved its 100,000th tote with
-                            zero failures.</p>
+                        <p class="news-excerpt">GXO Logistics confirms Agility's Digit moved its 100,000th tote with zero failures.</p>
                     </div>
                 </article>
 
-                <!-- 4 -->
-                <article class="news-card medium-news">
-                    <div class="news-image-placeholder">
-                        <img src="./news_figure.png" style="width:100%; height:100%; object-fit:cover;">
-                    </div>
+                <article class="news-card">
+                    <img src="./news_figure.png" alt="Figure" class="news-image">
                     <div class="news-content">
-                        <div class="news-tag">Finance</div>
-                        <h3 class="news-title">Figure AI $39B Valuation</h3>
-                        <p class="news-excerpt">New funding round cements Figure as the most valuable private robotics
-                            firm.</p>
+                        <span class="news-tag">Finance</span>
+                        <h3 class="news-title">Figure AI Reaches $39B Valuation</h3>
+                        <p class="news-excerpt">New funding round cements Figure as the most valuable private robotics firm.</p>
                     </div>
                 </article>
 
-                <!-- 5 -->
-                <article class="news-card medium-news">
-                    <div class="news-image-placeholder">
-                        <img src="./news_neo.png" style="width:100%; height:100%; object-fit:cover;">
-                    </div>
+                <article class="news-card">
+                    <img src="./news_neo.png" alt="NEO" class="news-image">
                     <div class="news-content">
-                        <div class="news-tag">Consumer</div>
-                        <h3 class="news-title">1X NEO Pre-orders</h3>
-                        <p class="news-excerpt">At $20K, the home assistant robot sold out its initial batch of 10,000
-                            units in 4 hours.</p>
+                        <span class="news-tag">Consumer</span>
+                        <h3 class="news-title">1X NEO Pre-orders Sold Out</h3>
+                        <p class="news-excerpt">At $20K, the home assistant robot sold out 10,000 units in 4 hours.</p>
                     </div>
                 </article>
             </div>
         </div>
     </section>
 
-    <!-- Video Section -->
-    <section class="video-section" id="vision">
+    <!-- Videos Section -->
+    <section id="videos">
         <div class="container">
-            <h2 class="section-title">🎬 // VISUAL_ARCHIVE</h2>
+            <div class="section-header">
+                <div class="section-label">Watch</div>
+                <h2 class="section-title">Robot Demos</h2>
+            </div>
+
             <div class="video-grid">
                 <div class="video-card">
                     <div class="video-wrapper">
                         <iframe
-                            src="https://www.youtube-nocookie.com/embed/29ECwExc-_M?rel=0&modestbranding=1"
+                            src="https://www.youtube-nocookie.com/embed/29ECwExc-_M?rel=0"
                             title="Boston Dynamics Atlas"
                             frameborder="0"
                             loading="lazy"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
-                    <h4 style="margin-top: 1rem;">Boston Dynamics "All New Atlas"</h4>
+                    <h4>Boston Dynamics - All New Atlas</h4>
                 </div>
                 <div class="video-card">
                     <div class="video-wrapper">
                         <iframe
-                            src="https://www.youtube-nocookie.com/embed/cpraXaw7dyc?rel=0&modestbranding=1"
-                            title="Tesla Optimus Gen 2"
+                            src="https://www.youtube-nocookie.com/embed/cpraXaw7dyc?rel=0"
+                            title="Tesla Optimus"
                             frameborder="0"
                             loading="lazy"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
-                    <h4 style="margin-top: 1rem;">Tesla Optimus Gen 2</h4>
+                    <h4>Tesla Optimus Gen 2</h4>
                 </div>
                 <div class="video-card">
                     <div class="video-wrapper">
                         <iframe
-                            src="https://www.youtube-nocookie.com/embed/Sq1QZB5baNw?rel=0&modestbranding=1"
-                            title="Figure 01 OpenAI Demo"
+                            src="https://www.youtube-nocookie.com/embed/Sq1QZB5baNw?rel=0"
+                            title="Figure 01 + OpenAI"
                             frameborder="0"
                             loading="lazy"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
-                    <h4 style="margin-top: 1rem;">Figure 01 + OpenAI Demo</h4>
+                    <h4>Figure 01 + OpenAI Demo</h4>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="container footer-content">
-            <div>
-                <h3>ROBOT_HUB // 2026</h3>
-                <p>TRACKING_EMBODIED_AI</p>
-            </div>
-            <div>
-                <p class="mono">LAST_UPDATE: JAN_2026</p>
-            </div>
+            <div class="footer-logo">Robot<span>Hub</span></div>
+            <div class="footer-text">Tracking the humanoid robot revolution · January 2026</div>
         </div>
     </footer>
 
     <script>
+        // Robot Data
         const robotsData = {
             figure02: {
                 name: "Figure 02",
-                emoji: "🦾",
                 company: "Figure AI",
                 valuation: "$39B",
-                status: "Pilot Deployment",
-                theme: "theme-pilot",
-                description: "Second-generation humanoid with end-to-end neural networks. Currently deployed at BMW manufacturing facilities for data collection and use case training.",
-                links: {
-                    news: "https://www.figure.ai/",
-                    video: "https://www.youtube.com/watch?v=GetjD9M_p64"
-                },
+                status: "Pilot",
+                statusClass: "pilot",
+                description: "Second-generation humanoid with end-to-end neural networks. Currently deployed at BMW manufacturing facilities for data collection and training.",
+                links: { news: "https://www.figure.ai/", video: "https://www.youtube.com/watch?v=GetjD9M_p64" },
                 specs: { height: "1.68m", weight: "60kg", payload: "20kg", dof: "41" },
                 metrics: { speed: 85, battery: 70 },
-                tags: ["Helix AI", "BMW Partner", "End-to-end NN"]
+                tags: ["Helix AI", "BMW Partner", "Neural Networks"]
             },
             phoenix: {
                 name: "Phoenix",
-                emoji: "👐",
                 company: "Sanctuary AI",
-                valuation: "Undisclosed",
+                valuation: "Private",
                 status: "Prototype",
-                theme: "theme-prototype",
+                statusClass: "prototype",
                 description: "Features industry-leading dexterity with human-like hands. Powered by Carbon AI control system for general-purpose work tasks.",
-                links: {
-                    news: "https://sanctuary.ai/resources/news/",
-                    video: "https://www.youtube.com/watch?v=tF4DML7FIWk"
-                },
+                links: { news: "https://sanctuary.ai/resources/news/", video: "https://www.youtube.com/watch?v=tF4DML7FIWk" },
                 specs: { height: "1.70m", weight: "75kg", payload: "25kg", dof: "110" },
                 metrics: { speed: 60, battery: 50 },
-                tags: ["Carbon AI", "Human Dexterity", "Teleop Hybrid"]
+                tags: ["Carbon AI", "Dexterous Hands", "Teleop"]
             },
             atlas: {
-                name: "Atlas (Electric)",
-                emoji: "🤸",
+                name: "Atlas",
                 company: "Boston Dynamics",
-                valuation: "Hyundai Owned",
-                status: "Production Ready", // Per user context "Production Launch"
-                theme: "theme-production",
-                description: "Fully electric commercial robot designed for real-world applications. Stronger, more agile, and completely untethered compared to hydraulic predecessor.",
-                links: {
-                    news: "https://bostondynamics.com/atlas/",
-                    video: "https://www.youtube.com/watch?v=29ECwExc-_M"
-                },
-                specs: { height: "1.50m", weight: "89kg", payload: "Undisclosed", dof: "56" },
+                valuation: "Hyundai",
+                status: "Production",
+                statusClass: "production",
+                description: "Fully electric commercial robot designed for real-world applications. Stronger, more agile, and completely untethered.",
+                links: { news: "https://bostondynamics.com/atlas/", video: "https://www.youtube.com/watch?v=29ECwExc-_M" },
+                specs: { height: "1.50m", weight: "89kg", payload: "N/A", dof: "56" },
                 metrics: { speed: 95, battery: 60 },
-                tags: ["DeepMind Core", "360° Vision", "Production 2026"]
+                tags: ["DeepMind", "360° Vision", "Electric"]
             },
             gr1: {
                 name: "GR-1",
-                emoji: "🏥",
                 company: "Fourier Intelligence",
                 valuation: "Series A",
                 status: "Prototype",
-                theme: "theme-prototype",
-                description: "Specialized for rehabilitation and elderly care with high payload capacity. Capable of carrying patients from bed to wheelchair.",
-                links: {
-                    news: "https://www.fftai.com/products-gr1",
-                    video: "https://www.youtube.com/results?search_query=Fourier+GR-1+humanoid+robot"
-                },
+                statusClass: "prototype",
+                description: "Specialized for rehabilitation and elderly care with high payload capacity. Capable of patient transfer tasks.",
+                links: { news: "https://www.fftai.com/products-gr1", video: "https://www.youtube.com/results?search_query=Fourier+GR-1+humanoid" },
                 specs: { height: "1.65m", weight: "55kg", payload: "50kg", dof: "44" },
                 metrics: { speed: 40, battery: 80 },
-                tags: ["Rehabilitation", "Elderly Care", "High Payload"]
+                tags: ["Healthcare", "High Payload", "Rehab"]
             },
             digit: {
                 name: "Digit",
-                emoji: "📦",
                 company: "Agility Robotics",
                 valuation: "$1B+",
-                status: "Production Ready",
-                theme: "theme-production",
-                description: "First commercially available humanoid focused on logistics. Successfully moving totes in GXO and Amazon warehouses with high reliability.",
-                links: {
-                    news: "https://agilityrobotics.com/",
-                    video: "https://www.youtube.com/watch?v=L65q8cFhF2k"
-                },
+                status: "Production",
+                statusClass: "production",
+                description: "First commercially available humanoid focused on logistics. Successfully moving totes in Amazon warehouses.",
+                links: { news: "https://agilityrobotics.com/", video: "https://www.youtube.com/watch?v=L65q8cFhF2k" },
                 specs: { height: "1.75m", weight: "65kg", payload: "16kg", dof: "30" },
                 metrics: { speed: 75, battery: 85 },
-                tags: ["Amazon Deployed", "GXO Logistics", "Backwards Legs"]
+                tags: ["Amazon", "Logistics", "Commercial"]
             },
             eve: {
                 name: "EVE",
-                emoji: "🛡️",
                 company: "1X Technologies",
                 valuation: "Series B",
-                status: "Pilot Deployment",
-                theme: "theme-pilot",
-                description: "Wheeled android designed for security and guarding tasks. Deployed commercially with ADT for patrolling and surveillance duties.",
-                links: {
-                    news: "https://www.1x.tech/eve",
-                    video: "https://www.youtube.com/results?search_query=1X+Technologies+EVE+robot+demo"
-                },
+                status: "Pilot",
+                statusClass: "pilot",
+                description: "Wheeled android designed for security and guarding tasks. Deployed commercially with ADT for surveillance.",
+                links: { news: "https://www.1x.tech/eve", video: "https://www.youtube.com/results?search_query=1X+EVE+robot" },
                 specs: { height: "1.86m", weight: "86kg", payload: "15kg", dof: "28" },
                 metrics: { speed: 90, battery: 90 },
-                tags: ["Wheeled", "Security focus", "ADT Partner"]
+                tags: ["Security", "Wheeled", "ADT Partner"]
             },
             neo: {
                 name: "NEO",
-                emoji: "🏠",
                 company: "1X Technologies",
                 valuation: "Series B",
                 status: "Pre-order",
-                theme: "theme-prototype",
-                description: "Consumer-focused android with soft outer shell for safety. Designed for home assistance tasks like cleaning and organizing.",
-                links: {
-                    news: "https://www.1x.tech/neo",
-                    video: "https://www.youtube.com/results?search_query=1X+NEO+humanoid+robot+home"
-                },
+                statusClass: "prototype",
+                description: "Consumer-focused android with soft outer shell for safety. Designed for home assistance tasks.",
+                links: { news: "https://www.1x.tech/neo", video: "https://www.youtube.com/results?search_query=1X+NEO+robot" },
                 specs: { height: "1.65m", weight: "30kg", payload: "10kg", dof: "37" },
                 metrics: { speed: 65, battery: 60 },
-                tags: ["Consumer ($20k)", "Soft Shell", "Safety First"]
+                tags: ["Consumer", "$20K", "Home"]
             },
             optimus: {
                 name: "Optimus Gen 3",
-                emoji: "🔋",
                 company: "Tesla",
                 valuation: "Internal",
-                status: "Pilot Deployment", // Mass production scheduled
-                theme: "theme-pilot",
-                description: "Tesla's general purpose humanoid using FSD AI stack. Gen 3 features improved 22-DoF hands and lighter weight design.",
-                links: {
-                    news: "https://www.tesla.com/AI",
-                    video: "https://www.youtube.com/watch?v=cpraXaw7dyc"
-                },
+                status: "Pilot",
+                statusClass: "pilot",
+                description: "Tesla's general purpose humanoid using FSD AI stack. Gen 3 features improved 22-DoF hands.",
+                links: { news: "https://www.tesla.com/AI", video: "https://www.youtube.com/watch?v=cpraXaw7dyc" },
                 specs: { height: "1.73m", weight: "57kg", payload: "20kg", dof: "40+" },
                 metrics: { speed: 80, battery: 95 },
-                tags: ["Mass Production", "FSD Brain", "22 DoF Hands"]
+                tags: ["FSD Brain", "Mass Production", "22 DoF"]
             },
             apollo: {
                 name: "Apollo",
-                emoji: "🚀",
                 company: "Apptronik",
                 valuation: "$1B+",
-                status: "Pilot Deployment",
-                theme: "theme-pilot",
-                description: "NASA-heritage design built for mass manufacturability. Modular tooling allows it to adapt to various industrial tasks.",
-                links: {
-                    news: "https://apptronik.com/apollo",
-                    video: "https://www.youtube.com/results?search_query=Apptronik+Apollo+humanoid+robot"
-                },
+                status: "Pilot",
+                statusClass: "pilot",
+                description: "NASA-heritage design built for mass manufacturability. Modular tooling for various industrial tasks.",
+                links: { news: "https://apptronik.com/apollo", video: "https://www.youtube.com/results?search_query=Apptronik+Apollo" },
                 specs: { height: "1.73m", weight: "73kg", payload: "25kg", dof: "30+" },
                 metrics: { speed: 70, battery: 75 },
-                tags: ["NASA Heritage", "Mercedes Partner", "Modular"]
+                tags: ["NASA Heritage", "Mercedes", "Modular"]
             }
         };
 
+        // DOM Elements
         const statsPanel = document.getElementById('stats-content');
         const hoverZones = document.querySelectorAll('.hover-zone');
+        const navbar = document.getElementById('navbar');
 
+        // Update stats panel
         function updateStats(id) {
             const robot = robotsData[id];
             if (!robot) return;
 
-            const html = `
-                <div class="robot-card ${robot.theme}">
-                    <div class="robot-header">
-                        <div class="robot-avatar">${robot.emoji}</div>
-                        <div class="robot-title">
-                            <h2>${robot.name}</h2>
-                            <div class="robot-company">${robot.company} • ${robot.valuation}</div>
-                            <div class="status-badge">${robot.status}</div>
-                        </div>
+            const progressColor = robot.statusClass === 'production' ? 'green' :
+                                  robot.statusClass === 'pilot' ? 'blue' : 'orange';
+
+            statsPanel.innerHTML = `
+                <div class="robot-card">
+                    <div class="robot-card-header">
+                        <h2>${robot.name}</h2>
+                        <div class="robot-company">${robot.company} · ${robot.valuation}</div>
+                        <span class="status-badge status-${robot.statusClass}">${robot.status}</span>
                     </div>
 
-                    <div class="robot-description">
-                        ${robot.description}
-                    </div>
+                    <p class="robot-description">${robot.description}</p>
 
                     <div class="specs-grid">
                         <div class="spec-item">
@@ -1188,51 +1115,74 @@
                     <div class="metrics-section">
                         <div class="metric">
                             <div class="metric-header">
-                                <span>Walking Speed / Agility</span>
-                                <span>${robot.metrics.speed}%</span>
+                                <span class="metric-label">Speed & Agility</span>
+                                <span class="metric-value">${robot.metrics.speed}%</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${robot.metrics.speed}%"></div>
+                                <div class="progress-fill ${progressColor}" style="width: ${robot.metrics.speed}%"></div>
                             </div>
                         </div>
                         <div class="metric">
                             <div class="metric-header">
-                                <span>Battery / AI Efficiency</span>
-                                <span>${robot.metrics.battery}%</span>
+                                <span class="metric-label">Battery Efficiency</span>
+                                <span class="metric-value">${robot.metrics.battery}%</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${robot.metrics.battery}%"></div>
+                                <div class="progress-fill ${progressColor}" style="width: ${robot.metrics.battery}%"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="capabilities">
+                    <div class="tags">
                         ${robot.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
                     </div>
 
                     <div class="robot-links">
-                        <a href="${robot.links.news}" target="_blank" class="link-btn link-news">
-                            <span>📰</span> Read Article
-                        </a>
-                        <a href="${robot.links.video}" target="_blank" class="link-btn link-video">
-                            <span>▶️</span> Watch Demo
-                        </a>
+                        <a href="${robot.links.news}" target="_blank" class="btn btn-secondary">Learn More</a>
+                        <a href="${robot.links.video}" target="_blank" class="btn btn-primary">Watch Demo</a>
                     </div>
                 </div>
             `;
-
-            statsPanel.innerHTML = html;
         }
 
+        // Event Listeners
         hoverZones.forEach(zone => {
             zone.addEventListener('mouseenter', () => {
                 const id = zone.getAttribute('data-id');
-                // Remove active class from all
-                hoverZones.forEach(z => z.classList.remove('active'));
-                // Add to current
-                zone.classList.add('active');
-
                 updateStats(id);
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero animations
+        gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 0.8, delay: 0.2 });
+        gsap.from('.hero h1', { opacity: 0, y: 30, duration: 0.8, delay: 0.4 });
+        gsap.from('.hero-description', { opacity: 0, y: 20, duration: 0.8, delay: 0.6 });
+        gsap.from('.hero-stats', { opacity: 0, y: 20, duration: 0.8, delay: 0.8 });
+
+        // Section animations
+        gsap.utils.toArray('section:not(.hero)').forEach(section => {
+            gsap.from(section.querySelectorAll('.section-header, .robot-showcase, .news-grid, .video-grid'), {
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 40,
+                duration: 0.8,
+                stagger: 0.2
             });
         });
     </script>
