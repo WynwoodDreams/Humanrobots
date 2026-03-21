@@ -47,7 +47,7 @@
         const robots = [
             {
                 id: 'figure02', name: 'Figure 02', company: 'Figure AI', img: './assets/robot_figure.png',
-                emoji: "🦾", valuation: "$2.6B", status: "Pilot Deployment", theme: "text-blue-400 border-blue-400",
+                emoji: "🦾", valuation: "$39B", status: "Pilot Deployment", theme: "text-blue-400 border-blue-400",
                 desc: "Second-generation humanoid with end-to-end neural networks. Deployed at BMW.",
                 specs: { height: "1.68m", weight: "60kg", payload: "20kg", dof: "41" },
                 metrics: { speed: 85, battery: 70 },
@@ -120,11 +120,11 @@
         ];
 
         const newsItems = [
-            { tag: "Breaking News", title: "Boston Dynamics Atlas Production Launch at CES 2026", desc: "Start of commercial availability backed by Google DeepMind.", img: "./news_atlas.png", featured: true },
-            { tag: "Tesla", title: "Optimus Gen 3 Mass Production", desc: "Fremont lines outputting 50 units/day.", img: "./news_optimus.png" },
-            { tag: "Agility", title: "Digit Hits 100K Totes", desc: "Moved 100,000th tote with zero failures.", img: "./news_digit.png" },
-            { tag: "Finance", title: "Figure AI $39B Valuation", desc: "Most valuable private robotics firm.", img: "./news_figure.png" },
-            { tag: "Consumer", title: "1X NEO Pre-orders", desc: "Sold out initial batch in 4 hours.", img: "./news_neo.png" }
+            { tag: "Breaking News", date: "JAN 07, 2026", title: "Boston Dynamics Atlas Production Launch at CES 2026", desc: "Start of commercial availability backed by Google DeepMind.", img: "./news_atlas.png", featured: true },
+            { tag: "Tesla", date: "FEB 12, 2026", title: "Optimus Gen 3 Mass Production", desc: "Fremont lines outputting 50 units/day.", img: "./news_optimus.png" },
+            { tag: "Agility", date: "MAR 03, 2026", title: "Digit Hits 100K Totes", desc: "Moved 100,000th tote with zero failures.", img: "./news_digit.png" },
+            { tag: "Finance", date: "MAR 15, 2026", title: "Figure AI $39B Valuation", desc: "Most valuable private robotics firm.", img: "./news_figure.png" },
+            { tag: "Consumer", date: "FEB 28, 2026", title: "1X NEO Pre-orders", desc: "Sold out initial batch in 4 hours.", img: "./news_neo.png" }
         ];
 
         const videos = [
@@ -143,15 +143,17 @@
             </a>
         );
 
-        const RobotCard = ({ robot, activeId, setActiveId }) => {
+        const RobotCard = ({ robot, activeId, setActiveId, onLeave, onClick, lockedId }) => {
             const isHovered = activeId === robot.id;
             const isDimmed = activeId && activeId !== robot.id;
+            const isLocked = lockedId === robot.id;
 
             return (
                 <div
-                    className="relative flex-1 min-w-[80px] h-[500px] flex items-end justify-center cursor-pointer group transition-all duration-300 -ml-4 first:ml-0"
+                    className={`relative flex-1 min-w-[80px] h-[500px] flex items-end justify-center cursor-pointer group transition-all duration-300 -ml-4 first:ml-0 ${isLocked ? 'ring-1 ring-[#D4FF00]/30' : ''}`}
                     onMouseEnter={() => setActiveId(robot.id)}
-                    onMouseLeave={() => setActiveId(null)}
+                    onMouseLeave={onLeave}
+                    onClick={() => onClick(robot.id)}
                 >
                     <motion.div
                         className="absolute bottom-0 w-32 h-8 rounded-[100%] bg-black blur-xl z-0"
@@ -246,6 +248,7 @@
                 </div>
                 <div className="p-6 flex flex-col justify-center">
                     <div className="text-[#D4FF00] font-mono text-xs uppercase mb-2 border-l-2 border-[#D4FF00] pl-2">{item.tag}</div>
+                    {item.date && <time className="font-mono text-[10px] text-gray-600 block mb-2">{item.date}</time>}
                     <h3 className="font-['Oswald'] text-xl md:text-2xl text-white mb-2">{item.title}</h3>
                     <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
                 </div>
@@ -254,6 +257,14 @@
 
         const App = () => {
             const [activeId, setActiveId] = useState(null);
+            const [lockedId, setLockedId] = useState(null);
+
+            const handleHover = (id) => { if (!lockedId) setActiveId(id); };
+            const handleLeave = () => { if (!lockedId) setActiveId(null); };
+            const handleClick = (id) => {
+                if (lockedId === id) { setLockedId(null); setActiveId(null); }
+                else { setLockedId(id); setActiveId(id); }
+            };
 
             return (
                 <div className="min-h-screen text-white">
@@ -286,7 +297,8 @@
                                 <div className="absolute top-4 left-4 font-mono text-xs text-[#D4FF00] z-20">FIG. 01 // LINEUP</div>
                                 <div className="flex w-full px-4 h-full items-end pb-0 justify-around">
                                     {robots.map(robot => (
-                                        <RobotCard key={robot.id} robot={robot} activeId={activeId} setActiveId={setActiveId} />
+                                        <RobotCard key={robot.id} robot={robot} activeId={activeId}
+                                            setActiveId={handleHover} onLeave={handleLeave} onClick={handleClick} lockedId={lockedId} />
                                     ))}
                                 </div>
                                 <div className="absolute inset-0 pointer-events-none bg-radial-gradient from-transparent to-black opacity-50"></div>
