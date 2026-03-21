@@ -170,7 +170,8 @@
         }
 
         .nav-links a {
-            color: var(--text-muted);
+            color: var(--text-main);
+            text-decoration: none;
             transition: color 0.2s;
             padding: 0.85rem 1.25rem;
             border-right: 1px solid var(--border-raw);
@@ -193,7 +194,7 @@
             border-left: 1px solid var(--border-raw);
             font-family: var(--font-mono);
             font-size: 0.65rem;
-            color: var(--text-data);
+            color: var(--text-main);
             text-transform: uppercase;
             display: flex;
             align-items: center;
@@ -239,7 +240,7 @@
             white-space: nowrap;
             font-family: var(--font-mono);
             font-size: 0.75rem;
-            color: var(--text-data);
+            color: var(--text-muted);
             padding: 0.6rem 0;
         }
 
@@ -293,9 +294,9 @@
         .data-freshness {
             font-family: var(--font-mono);
             font-size: 0.65rem;
-            color: var(--text-data);
-            margin-top: 1rem;
-            padding-top: 1rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
             border-top: 1px solid var(--border-raw);
             display: flex;
             align-items: center;
@@ -322,7 +323,7 @@
         .interactive-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 4rem;
+            gap: 2rem;
             align-items: start;
         }
 
@@ -355,14 +356,57 @@
             position: relative;
             background: radial-gradient(circle at center, #222 0%, #000 100%);
             border: 1px solid var(--border-raw);
-            min-height: 400px;
+            max-height: 420px;
+            overflow: hidden;
         }
 
         .robot-image-container img {
             width: 100%;
             display: block;
+            object-fit: cover;
+            object-position: center 38%;
+            height: 420px;
             filter: grayscale(80%) contrast(120%);
             transition: filter 0.4s;
+        }
+
+        /* Robot name strip below image */
+        .robot-name-strip {
+            display: flex;
+            border: 1px solid var(--border-raw);
+            border-top: none;
+            background: var(--bg-void);
+        }
+
+        .robot-name-label {
+            flex: 1;
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-main);
+            padding: 0.6rem 0.2rem;
+            border-right: 1px solid var(--border-raw);
+            cursor: pointer;
+            transition: all 0.15s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .robot-name-label:last-child { border-right: none; }
+
+        .robot-name-label:hover {
+            color: var(--accent-acid);
+            background: rgba(212, 255, 0, 0.08);
+        }
+
+        .robot-name-label.active {
+            color: #0a0a0a;
+            background: var(--accent-acid);
+            font-weight: 700;
         }
 
         .robot-image-container:hover img {
@@ -422,11 +466,8 @@
         /* Stats Panel - HUD Style */
         .stats-panel-sticky {
             position: sticky;
-            top: 8rem;
+            top: 5rem;
             overflow: hidden;
-            /* Clip the slide-in animation */
-            min-height: 400px;
-            /* Ensure space for card */
         }
 
         .glass-panel {
@@ -480,7 +521,7 @@
 
         .robot-portrait {
             width: 100%;
-            height: 160px;
+            height: 120px;
             overflow: hidden;
             border-bottom: 2px solid var(--text-main);
             position: relative;
@@ -501,24 +542,24 @@
             right: 0.75rem;
             font-family: var(--font-mono);
             font-size: 0.55rem;
-            color: var(--text-data);
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
 
         .robot-header {
             border-bottom: 2px solid var(--text-main);
-            padding-bottom: 1rem;
-            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            margin-bottom: 0.75rem;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
         }
 
         .robot-title h2 {
-            font-size: 2.5rem;
+            font-size: 1.75rem;
             line-height: 1;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.35rem;
         }
 
         .robot-avatar {
@@ -564,7 +605,7 @@
             /* Continuous grid */
             display: grid;
             grid-template-columns: 1fr 1fr;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
         .spec-item {
@@ -572,20 +613,21 @@
             border-right: 1px solid var(--border-raw);
             border-bottom: 1px solid var(--border-raw);
             border-radius: 0;
-            padding: 1rem;
+            padding: 0.6rem 0.75rem;
         }
 
         .spec-label {
             font-family: var(--font-mono);
-            color: var(--text-data);
-            font-size: 0.7rem;
+            color: var(--accent-acid);
+            font-size: 0.65rem;
             text-transform: uppercase;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
+            opacity: 0.7;
         }
 
         .spec-value {
             font-family: var(--font-display);
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             color: var(--text-main);
         }
 
@@ -964,9 +1006,10 @@
         }
 
         .robot-description {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
             line-height: 1.6;
             font-family: var(--font-body);
         }
@@ -1262,7 +1305,17 @@
             }
 
             .robot-image-container {
-                min-height: 200px;
+                max-height: 250px;
+            }
+
+            .robot-image-container img {
+                height: 250px;
+                object-position: center 42%;
+            }
+
+            .robot-name-label {
+                font-size: 0.6rem;
+                padding: 0.4rem 0.1rem;
             }
 
             /* Stats panel mobile */
@@ -1400,22 +1453,16 @@
                 <span>//</span> ROBOT_HUB
             </div>
             <nav class="nav-links">
-                <a href="#inventory">Inventory</a>
-                <a href="#intel">Intel</a>
-                <a href="#vision">Vision</a>
+                <a href="#inventory">Robots</a>
+                <a href="#news-section">News</a>
+                <a href="#video-section">Video</a>
             </nav>
             <div class="header-stats">
                 <div class="header-stat">
-                    Tracking <span class="header-stat-value">9</span>
+                    <span class="header-stat-value">9</span> Robots
                 </div>
                 <div class="header-stat">
-                    Production <span class="header-stat-value">2</span>
-                </div>
-                <div class="header-stat">
-                    Pilot <span class="header-stat-value text-electric">4</span>
-                </div>
-                <div class="header-stat">
-                    Latest <span class="header-stat-value text-main">Figure $39B</span>
+                    <span class="header-stat-value">2026</span>
                 </div>
             </div>
         </div>
@@ -1478,6 +1525,18 @@
                     </div>
                 </div>
 
+                <!-- Robot name strip -->
+                <div class="robot-name-strip">
+                    <div class="robot-name-label" data-id="figure02">Figure 02</div>
+                    <div class="robot-name-label" data-id="phoenix">Phoenix</div>
+                    <div class="robot-name-label" data-id="atlas">Atlas</div>
+                    <div class="robot-name-label" data-id="gr1">GR-1</div>
+                    <div class="robot-name-label" data-id="digit">Digit</div>
+                    <div class="robot-name-label" data-id="eve">EVE</div>
+                    <div class="robot-name-label" data-id="neo">NEO</div>
+                    <div class="robot-name-label" data-id="optimus">Optimus</div>
+                    <div class="robot-name-label" data-id="apollo">Apollo</div>
+                </div>
 
             </div>
 
@@ -1920,7 +1979,7 @@
                         <span class="robot-portrait-label">${robot.company}</span>
                     </div>
 
-                    <div style="padding: 1.5rem;">
+                    <div style="padding: 1rem 1.25rem;">
                         <div class="robot-header">
                             <div class="robot-title">
                                 <h2>${robot.name}</h2>
@@ -2000,13 +2059,36 @@
         }
 
         let lockedId = null;
+        const nameLabels = document.querySelectorAll('.robot-name-label');
+
+        function selectRobot(id) {
+            hoverZones.forEach(z => z.classList.remove('active', 'locked'));
+            nameLabels.forEach(l => l.classList.remove('active'));
+            const zone = document.querySelector(`.hover-zone[data-id="${id}"]`);
+            const label = document.querySelector(`.robot-name-label[data-id="${id}"]`);
+            if (zone) { zone.classList.add('active', 'locked'); }
+            if (label) { label.classList.add('active'); }
+            imageContainer.classList.add('has-active');
+            lockedId = id;
+            updateStats(id);
+        }
+
+        function clearSelection() {
+            hoverZones.forEach(z => z.classList.remove('active', 'locked'));
+            nameLabels.forEach(l => l.classList.remove('active'));
+            imageContainer.classList.remove('has-active');
+            lockedId = null;
+        }
 
         hoverZones.forEach(zone => {
             zone.addEventListener('mouseenter', () => {
                 if (lockedId) return;
                 const id = zone.getAttribute('data-id');
                 hoverZones.forEach(z => z.classList.remove('active'));
+                nameLabels.forEach(l => l.classList.remove('active'));
                 zone.classList.add('active');
+                const label = document.querySelector(`.robot-name-label[data-id="${id}"]`);
+                if (label) label.classList.add('active');
                 imageContainer.classList.add('has-active');
                 updateStats(id);
             });
@@ -2014,20 +2096,27 @@
             zone.addEventListener('mouseleave', () => {
                 if (lockedId) return;
                 imageContainer.classList.remove('has-active');
+                nameLabels.forEach(l => l.classList.remove('active'));
             });
 
             zone.addEventListener('click', () => {
                 const id = zone.getAttribute('data-id');
                 if (lockedId === id) {
-                    lockedId = null;
-                    zone.classList.remove('locked');
-                    imageContainer.classList.remove('has-active');
+                    clearSelection();
                 } else {
-                    hoverZones.forEach(z => z.classList.remove('active', 'locked'));
-                    zone.classList.add('active', 'locked');
-                    lockedId = id;
-                    imageContainer.classList.add('has-active');
-                    updateStats(id);
+                    selectRobot(id);
+                }
+            });
+        });
+
+        // Name strip click handlers
+        nameLabels.forEach(label => {
+            label.addEventListener('click', () => {
+                const id = label.getAttribute('data-id');
+                if (lockedId === id) {
+                    clearSelection();
+                } else {
+                    selectRobot(id);
                 }
             });
         });
