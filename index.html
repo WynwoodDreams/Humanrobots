@@ -445,11 +445,15 @@
             width: 100%;
             display: block;
             filter: grayscale(80%) contrast(120%);
-            transition: filter 0.3s;
+            transition: filter 0.4s;
         }
 
         .robot-image-container:hover img {
-            filter: grayscale(0%) contrast(110%);
+            filter: grayscale(40%) contrast(110%) brightness(0.6);
+        }
+
+        .robot-image-container.has-active img {
+            filter: grayscale(40%) contrast(110%) brightness(0.5);
         }
 
         .hover-zone {
@@ -463,14 +467,16 @@
 
         .hover-zone:hover {
             border: 1px solid var(--accent-acid);
-            background: rgba(212, 255, 0, 0.05);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: brightness(1.8);
             cursor: pointer;
         }
 
         .hover-zone.locked {
             border: 1px solid var(--accent-acid);
-            background: rgba(212, 255, 0, 0.08);
-            box-shadow: 0 0 12px rgba(212, 255, 0, 0.15);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: brightness(2);
+            box-shadow: 0 0 20px rgba(212, 255, 0, 0.2);
         }
 
         .hover-tooltip {
@@ -517,7 +523,7 @@
         }
 
         .robot-card {
-            padding: 2rem;
+            padding: 0;
             border: 1px solid var(--border-raw);
             position: relative;
             background:
@@ -555,10 +561,38 @@
             pointer-events: none;
         }
 
+        .robot-portrait {
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+            border-bottom: 2px solid var(--text-main);
+            position: relative;
+            background: radial-gradient(ellipse at center bottom, #1a1a1a 0%, #000 100%);
+        }
+
+        .robot-portrait img {
+            height: 100%;
+            display: block;
+            margin: 0 auto;
+            object-fit: contain;
+            filter: contrast(110%) brightness(95%);
+        }
+
+        .robot-portrait-label {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            color: var(--text-data);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
         .robot-header {
             border-bottom: 2px solid var(--text-main);
             padding-bottom: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -572,7 +606,6 @@
 
         .robot-avatar {
             display: none;
-            /* Hide emoji for serious look */
         }
 
         .robot-company {
@@ -646,6 +679,32 @@
             height: 12px;
             border-radius: 0;
             margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            position: relative;
+        }
+
+        .progress-benchmark {
+            position: absolute;
+            top: -2px;
+            bottom: -2px;
+            width: 2px;
+            background: var(--text-muted);
+            opacity: 0.6;
+            z-index: 2;
+        }
+
+        .progress-benchmark::after {
+            content: 'AVG';
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-mono);
+            font-size: 0.45rem;
+            color: var(--text-data);
+            letter-spacing: 0.05em;
         }
 
         .progress-fill {
@@ -1308,7 +1367,15 @@
             }
 
             .robot-card {
-                padding: 1.25rem;
+                padding: 0;
+            }
+
+            .robot-card > div:last-child {
+                padding: 1rem !important;
+            }
+
+            .robot-portrait {
+                height: 120px;
             }
 
             .robot-title h2 {
@@ -1766,12 +1833,15 @@
             figure02: {
                 name: "Figure 02",
                 emoji: "🦾",
+                asset: "robot_figure",
                 company: "Figure AI",
                 valuation: "$39B",
                 status: "Pilot Deployment",
                 theme: "theme-pilot",
                 dataVerified: "2026-03",
                 description: "Second-generation humanoid with end-to-end neural networks. Currently deployed at BMW manufacturing facilities for data collection and use case training.",
+                newsSource: "Figure AI",
+                videoTitle: "Figure 02 Demo",
                 links: {
                     news: "https://www.figure.ai/",
                     video: "https://www.youtube.com/watch?v=GetjD9M_p64"
@@ -1783,12 +1853,15 @@
             phoenix: {
                 name: "Phoenix",
                 emoji: "👐",
+                asset: "robot_phoenix",
                 company: "Sanctuary AI",
-                valuation: "Undisclosed",
+                valuation: "Private",
                 status: "Prototype",
                 theme: "theme-prototype",
                 dataVerified: "2026-02",
                 description: "Features industry-leading dexterity with human-like hands. Powered by Carbon AI control system for general-purpose work tasks.",
+                newsSource: "Sanctuary AI",
+                videoTitle: "Phoenix Dexterity Demo",
                 links: {
                     news: "https://sanctuary.ai/resources/news/",
                     video: "https://www.youtube.com/watch?v=tF4DML7FIWk"
@@ -1800,12 +1873,15 @@
             atlas: {
                 name: "Atlas (Electric)",
                 emoji: "🤸",
+                asset: "robot_atlas",
                 company: "Boston Dynamics",
-                valuation: "Hyundai Owned",
+                valuation: "Hyundai (KRX: 005380)",
                 status: "Production Ready", // Per user context "Production Launch"
                 theme: "theme-production",
                 dataVerified: "2026-03",
                 description: "Fully electric commercial robot designed for real-world applications. Stronger, more agile, and completely untethered compared to hydraulic predecessor.",
+                newsSource: "Boston Dynamics",
+                videoTitle: "All New Atlas Reveal",
                 links: {
                     news: "https://bostondynamics.com/atlas/",
                     video: "https://www.youtube.com/watch?v=29ECwExc-_M"
@@ -1817,12 +1893,15 @@
             gr1: {
                 name: "GR-1",
                 emoji: "🏥",
+                asset: "robot_gr1",
                 company: "Fourier Intelligence",
                 valuation: "Series A",
                 status: "Prototype",
                 theme: "theme-prototype",
                 dataVerified: "2025-11",
                 description: "Specialized for rehabilitation and elderly care with high payload capacity. Capable of carrying patients from bed to wheelchair.",
+                newsSource: "Fourier Intelligence",
+                videoTitle: "GR-1 Rehab Demo",
                 links: {
                     news: "https://www.fftai.com/products-gr1",
                     video: "https://www.youtube.com/results?search_query=Fourier+GR-1+humanoid+robot"
@@ -1834,12 +1913,15 @@
             digit: {
                 name: "Digit",
                 emoji: "📦",
+                asset: "robot_digit",
                 company: "Agility Robotics",
                 valuation: "$1B+",
                 status: "Production Ready",
                 theme: "theme-production",
                 dataVerified: "2026-03",
                 description: "First commercially available humanoid focused on logistics. Successfully moving totes in GXO and Amazon warehouses with high reliability.",
+                newsSource: "Agility Robotics",
+                videoTitle: "Digit Warehouse Demo",
                 links: {
                     news: "https://agilityrobotics.com/",
                     video: "https://www.youtube.com/watch?v=L65q8cFhF2k"
@@ -1851,12 +1933,15 @@
             eve: {
                 name: "EVE",
                 emoji: "🛡️",
+                asset: "robot_eve",
                 company: "1X Technologies",
                 valuation: "Series B",
                 status: "Pilot Deployment",
                 theme: "theme-pilot",
                 dataVerified: "2026-01",
                 description: "Wheeled android designed for security and guarding tasks. Deployed commercially with ADT for patrolling and surveillance duties.",
+                newsSource: "1X Technologies",
+                videoTitle: "EVE Security Patrol",
                 links: {
                     news: "https://www.1x.tech/eve",
                     video: "https://www.youtube.com/results?search_query=1X+Technologies+EVE+robot+demo"
@@ -1868,12 +1953,15 @@
             neo: {
                 name: "NEO",
                 emoji: "🏠",
+                asset: "robot_neo",
                 company: "1X Technologies",
                 valuation: "Series B",
                 status: "Pre-order",
                 theme: "theme-prototype",
                 dataVerified: "2026-02",
                 description: "Consumer-focused android with soft outer shell for safety. Designed for home assistance tasks like cleaning and organizing.",
+                newsSource: "1X Technologies",
+                videoTitle: "NEO Home Assistant",
                 links: {
                     news: "https://www.1x.tech/neo",
                     video: "https://www.youtube.com/results?search_query=1X+NEO+humanoid+robot+home"
@@ -1885,12 +1973,15 @@
             optimus: {
                 name: "Optimus Gen 3",
                 emoji: "🔋",
+                asset: "robot_optimus",
                 company: "Tesla",
-                valuation: "Internal",
+                valuation: "TSLA",
                 status: "Pilot Deployment", // Mass production scheduled
                 theme: "theme-pilot",
                 dataVerified: "2026-03",
                 description: "Tesla's general purpose humanoid using FSD AI stack. Gen 3 features improved 22-DoF hands and lighter weight design.",
+                newsSource: "Tesla AI",
+                videoTitle: "Optimus Gen 2 Walk",
                 links: {
                     news: "https://www.tesla.com/AI",
                     video: "https://www.youtube.com/watch?v=cpraXaw7dyc"
@@ -1902,12 +1993,15 @@
             apollo: {
                 name: "Apollo",
                 emoji: "🚀",
+                asset: "robot_apollo",
                 company: "Apptronik",
-                valuation: "$1B+",
+                valuation: "$350M+",
                 status: "Pilot Deployment",
                 theme: "theme-pilot",
                 dataVerified: "2026-01",
                 description: "NASA-heritage design built for mass manufacturability. Modular tooling allows it to adapt to various industrial tasks.",
+                newsSource: "Apptronik",
+                videoTitle: "Apollo Factory Demo",
                 links: {
                     news: "https://apptronik.com/apollo",
                     video: "https://www.youtube.com/results?search_query=Apptronik+Apollo+humanoid+robot"
@@ -1920,6 +2014,7 @@
 
         const statsPanel = document.getElementById('stats-content');
         const hoverZones = document.querySelectorAll('.hover-zone');
+        const imageContainer = document.querySelector('.robot-image-container');
 
         function getFreshnessClass(dateStr) {
             if (!dateStr) return 'freshness-stale';
@@ -1935,77 +2030,88 @@
             const robot = robotsData[id];
             if (!robot) return;
 
+            const speedLabel = robot.metrics.speed >= 80 ? 'Above avg' : robot.metrics.speed >= 60 ? 'Average' : 'Below avg';
+            const batteryLabel = robot.metrics.battery >= 80 ? 'Above avg' : robot.metrics.battery >= 60 ? 'Average' : 'Below avg';
+
             const html = `
                 <div class="robot-card ${robot.theme}">
-                    <div class="robot-header">
-                        <div class="robot-avatar">${robot.emoji}</div>
-                        <div class="robot-title">
-                            <h2>${robot.name}</h2>
-                            <div class="robot-company">${robot.company} • ${robot.valuation}</div>
-                            <div class="status-badge">${robot.status}</div>
-                        </div>
+                    <div class="robot-portrait">
+                        <img src="./assets/${robot.asset}.png" alt="${robot.name}">
+                        <span class="robot-portrait-label">${robot.company}</span>
                     </div>
 
-                    <div class="robot-description">
-                        ${robot.description}
-                    </div>
-
-                    <div class="specs-grid">
-                        <div class="spec-item">
-                            <div class="spec-label">Height</div>
-                            <div class="spec-value">${robot.specs.height}</div>
-                        </div>
-                        <div class="spec-item">
-                            <div class="spec-label">Weight</div>
-                            <div class="spec-value">${robot.specs.weight}</div>
-                        </div>
-                        <div class="spec-item">
-                            <div class="spec-label">Payload</div>
-                            <div class="spec-value">${robot.specs.payload}</div>
-                        </div>
-                        <div class="spec-item">
-                            <div class="spec-label">DoF</div>
-                            <div class="spec-value">${robot.specs.dof}</div>
-                        </div>
-                    </div>
-
-                    <div class="metrics-section">
-                        <div class="metric">
-                            <div class="metric-header">
-                                <span>Walking Speed / Agility</span>
-                                <span>${robot.metrics.speed}%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${robot.metrics.speed}%"></div>
+                    <div style="padding: 1.5rem;">
+                        <div class="robot-header">
+                            <div class="robot-title">
+                                <h2>${robot.name}</h2>
+                                <div class="robot-company">${robot.company} &bull; ${robot.valuation}</div>
+                                <div class="status-badge">${robot.status}</div>
                             </div>
                         </div>
-                        <div class="metric">
-                            <div class="metric-header">
-                                <span>Battery / AI Efficiency</span>
-                                <span>${robot.metrics.battery}%</span>
+
+                        <div class="robot-description">
+                            ${robot.description}
+                        </div>
+
+                        <div class="specs-grid">
+                            <div class="spec-item">
+                                <div class="spec-label">Height</div>
+                                <div class="spec-value">${robot.specs.height}</div>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${robot.metrics.battery}%"></div>
+                            <div class="spec-item">
+                                <div class="spec-label">Weight</div>
+                                <div class="spec-value">${robot.specs.weight}</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">Payload</div>
+                                <div class="spec-value">${robot.specs.payload}</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">DoF</div>
+                                <div class="spec-value">${robot.specs.dof}</div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="capabilities">
-                        ${robot.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                    </div>
+                        <div class="metrics-section">
+                            <div class="metric">
+                                <div class="metric-header">
+                                    <span>Walking Speed / Agility</span>
+                                    <span>${robot.metrics.speed}% <span style="color:var(--text-data); font-size:0.65rem;">${speedLabel}</span></span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${robot.metrics.speed}%"></div>
+                                    <div class="progress-benchmark" style="left: 70%" title="Field average (70%)"></div>
+                                </div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-header">
+                                    <span>Battery / AI Efficiency</span>
+                                    <span>${robot.metrics.battery}% <span style="color:var(--text-data); font-size:0.65rem;">${batteryLabel}</span></span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${robot.metrics.battery}%"></div>
+                                    <div class="progress-benchmark" style="left: 70%" title="Field average (70%)"></div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="robot-links">
-                        <a href="${robot.links.news}" target="_blank" class="link-btn link-news">
-                            <span>📰</span> Read Article
-                        </a>
-                        <a href="${robot.links.video}" target="_blank" class="link-btn link-video">
-                            <span>▶️</span> Watch Demo
-                        </a>
-                    </div>
+                        <div class="capabilities">
+                            ${robot.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
 
-                    <div class="data-freshness">
-                        <span class="freshness-dot ${getFreshnessClass(robot.dataVerified)}"></span>
-                        DATA_VERIFIED: ${robot.dataVerified || 'UNKNOWN'}
+                        <div class="robot-links">
+                            <a href="${robot.links.news}" target="_blank" class="link-btn link-news">
+                                ${robot.newsSource}
+                            </a>
+                            <a href="${robot.links.video}" target="_blank" class="link-btn link-video">
+                                ${robot.videoTitle}
+                            </a>
+                        </div>
+
+                        <div class="data-freshness">
+                            <span class="freshness-dot ${getFreshnessClass(robot.dataVerified)}"></span>
+                            DATA_VERIFIED: ${robot.dataVerified || 'UNKNOWN'}
+                        </div>
                     </div>
                 </div>
             `;
@@ -2017,25 +2123,30 @@
 
         hoverZones.forEach(zone => {
             zone.addEventListener('mouseenter', () => {
-                if (lockedId) return; // Don't override locked selection
+                if (lockedId) return;
                 const id = zone.getAttribute('data-id');
                 hoverZones.forEach(z => z.classList.remove('active'));
                 zone.classList.add('active');
+                imageContainer.classList.add('has-active');
                 updateStats(id);
             });
 
-            // Click to lock/unlock selection (enables mobile + persistent viewing)
+            zone.addEventListener('mouseleave', () => {
+                if (lockedId) return;
+                imageContainer.classList.remove('has-active');
+            });
+
             zone.addEventListener('click', () => {
                 const id = zone.getAttribute('data-id');
                 if (lockedId === id) {
-                    // Clicking same robot unlocks
                     lockedId = null;
                     zone.classList.remove('locked');
+                    imageContainer.classList.remove('has-active');
                 } else {
-                    // Lock new selection
                     hoverZones.forEach(z => z.classList.remove('active', 'locked'));
                     zone.classList.add('active', 'locked');
                     lockedId = id;
+                    imageContainer.classList.add('has-active');
                     updateStats(id);
                 }
             });
