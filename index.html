@@ -230,67 +230,89 @@
             }
         }
 
-        /* Hero Redesign - Dashboard */
-        .hero {
-            padding: 8rem 0 2rem;
-            position: relative;
-            overflow: hidden;
+        /* Hero — compact command strip */
+        .hero-strip {
+            padding-top: 5.5rem; /* clear fixed header */
+            background: var(--bg-void);
             border-bottom: 1px solid var(--border-raw);
         }
 
-        .hero h1 {
-            font-size: 6vw;
-            line-height: 0.85;
-            color: var(--text-main);
-            max-width: 90%;
-            margin-bottom: 1.5rem;
-            mix-blend-mode: exclusion;
+        .hero-strip-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            gap: 2rem;
+            flex-wrap: wrap;
         }
 
-        .hero-subtitle {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--text-data);
+        .hero-strip-left {
+            display: flex;
+            align-items: baseline;
+            gap: 1.25rem;
+            min-width: 0;
+        }
+
+        .hero-strip-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-bottom: 2rem;
+            color: var(--text-main);
+            white-space: nowrap;
+            letter-spacing: 0.04em;
         }
 
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0;
-            border: 1px solid var(--border-raw);
-            margin-top: 2rem;
-        }
-
-        .hero-stat {
-            padding: 1.5rem;
-            border-right: 1px solid var(--border-raw);
+        .hero-strip-label {
             font-family: var(--font-mono);
-        }
-
-        .hero-stat:last-child { border-right: none; }
-
-        .hero-stat-label {
             font-size: 0.65rem;
             color: var(--text-data);
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            margin-bottom: 0.5rem;
+            white-space: nowrap;
         }
 
-        .hero-stat-value {
+        .hero-strip-stats {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border-raw);
+            flex-shrink: 0;
+        }
+
+        .hero-strip-stat {
+            padding: 0.6rem 1.25rem;
+            border-right: 1px solid var(--border-raw);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-data);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .hero-strip-stat:last-child { border-right: none; }
+
+        .hero-strip-stat-value {
             font-family: var(--font-display);
-            font-size: 2rem;
+            font-size: 1.25rem;
             color: var(--accent-acid);
             line-height: 1;
         }
 
-        .hero-stat-delta {
-            font-size: 0.65rem;
-            color: var(--accent-acid);
-            margin-top: 0.25rem;
+        .hero-strip-stat-value.text-electric {
+            color: var(--accent-electric);
+        }
+
+        @media (max-width: 1024px) {
+            .hero-strip-inner { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+            .hero-strip-stats { width: 100%; }
+            .hero-strip-stat { flex: 1; justify-content: center; }
+        }
+
+        @media (max-width: 640px) {
+            .hero-strip-stats { flex-wrap: wrap; }
+            .hero-strip-stat { flex: 1 1 45%; border-bottom: 1px solid var(--border-raw); }
         }
 
         /* Event Ticker */
@@ -375,29 +397,9 @@
         .freshness-aging { background: #FFaa00; }
         .freshness-stale { background: var(--accent-alert); }
 
-        .hero-meta {
-            display: flex;
-            gap: 2rem;
-            font-family: var(--font-mono);
-            color: var(--text-muted);
-            border-left: 2px solid var(--accent-acid);
-            padding-left: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .hero-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .hero-stat:nth-child(2) { border-right: none; }
-            .hero-stat:nth-child(1), .hero-stat:nth-child(2) {
-                border-bottom: 1px solid var(--border-raw);
-            }
-        }
-
         /* Interactive Section */
         .interactive-section {
-            padding: 6rem 0;
+            padding: 3rem 0 6rem;
         }
 
         .interactive-grid {
@@ -1135,33 +1137,27 @@
         </div>
     </header>
 
-    <!-- Hero Dashboard -->
-    <section class="hero">
-        <div class="decoration-line"></div>
+    <!-- Hero — compact command strip -->
+    <section class="hero-strip">
         <div class="container">
-            <div class="hero-subtitle">FIG. 00 // HUMANOID ROBOTICS INTELLIGENCE DASHBOARD</div>
-            <h1>EMBODIED<br>INTELLIGENCE</h1>
-
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="hero-stat-label">Units Tracked</div>
-                    <div class="hero-stat-value" id="stat-units">9</div>
-                    <div class="hero-stat-delta">across 8 companies</div>
+            <div class="hero-strip-inner">
+                <div class="hero-strip-left">
+                    <span class="hero-strip-title">Embodied Intelligence</span>
+                    <span class="hero-strip-label">Humanoid Robotics Tracker</span>
                 </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-label">Production Ready</div>
-                    <div class="hero-stat-value" id="stat-production">2</div>
-                    <div class="hero-stat-delta">Atlas, Digit</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-label">Pilot Deployments</div>
-                    <div class="hero-stat-value" id="stat-pilot">4</div>
-                    <div class="hero-stat-delta">Figure, EVE, Optimus, Apollo</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-label">Latest Event</div>
-                    <div class="hero-stat-value" style="font-size:1.2rem; color: var(--text-main);">Figure $39B</div>
-                    <div class="hero-stat-delta">MAR 15, 2026</div>
+                <div class="hero-strip-stats">
+                    <div class="hero-strip-stat">
+                        Tracking <span class="hero-strip-stat-value">9</span> units
+                    </div>
+                    <div class="hero-strip-stat">
+                        Production <span class="hero-strip-stat-value">2</span>
+                    </div>
+                    <div class="hero-strip-stat">
+                        Pilot <span class="hero-strip-stat-value text-electric">4</span>
+                    </div>
+                    <div class="hero-strip-stat">
+                        Latest <span class="hero-strip-stat-value" style="font-size:0.85rem; color: var(--text-main);">Figure $39B</span>
+                    </div>
                 </div>
             </div>
         </div>
