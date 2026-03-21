@@ -355,14 +355,51 @@
             position: relative;
             background: radial-gradient(circle at center, #222 0%, #000 100%);
             border: 1px solid var(--border-raw);
-            min-height: 400px;
+            max-height: 420px;
+            overflow: hidden;
         }
 
         .robot-image-container img {
             width: 100%;
             display: block;
+            object-fit: cover;
+            object-position: center 38%;
+            height: 420px;
             filter: grayscale(80%) contrast(120%);
             transition: filter 0.4s;
+        }
+
+        /* Robot name strip below image */
+        .robot-name-strip {
+            display: flex;
+            border: 1px solid var(--border-raw);
+            border-top: none;
+            background: var(--bg-void);
+        }
+
+        .robot-name-label {
+            flex: 1;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-data);
+            padding: 0.4rem 0.15rem;
+            border-right: 1px solid var(--border-raw);
+            cursor: pointer;
+            transition: all 0.15s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .robot-name-label:last-child { border-right: none; }
+
+        .robot-name-label:hover,
+        .robot-name-label.active {
+            color: var(--accent-acid);
+            background: rgba(212, 255, 0, 0.05);
         }
 
         .robot-image-container:hover img {
@@ -1262,7 +1299,17 @@
             }
 
             .robot-image-container {
-                min-height: 200px;
+                max-height: 250px;
+            }
+
+            .robot-image-container img {
+                height: 250px;
+                object-position: center 42%;
+            }
+
+            .robot-name-label {
+                font-size: 0.45rem;
+                padding: 0.3rem 0.1rem;
             }
 
             /* Stats panel mobile */
@@ -1478,6 +1525,18 @@
                     </div>
                 </div>
 
+                <!-- Robot name strip -->
+                <div class="robot-name-strip">
+                    <div class="robot-name-label" data-id="figure02">Figure 02</div>
+                    <div class="robot-name-label" data-id="phoenix">Phoenix</div>
+                    <div class="robot-name-label" data-id="atlas">Atlas</div>
+                    <div class="robot-name-label" data-id="gr1">GR-1</div>
+                    <div class="robot-name-label" data-id="digit">Digit</div>
+                    <div class="robot-name-label" data-id="eve">EVE</div>
+                    <div class="robot-name-label" data-id="neo">NEO</div>
+                    <div class="robot-name-label" data-id="optimus">Optimus</div>
+                    <div class="robot-name-label" data-id="apollo">Apollo</div>
+                </div>
 
             </div>
 
@@ -2000,13 +2059,36 @@
         }
 
         let lockedId = null;
+        const nameLabels = document.querySelectorAll('.robot-name-label');
+
+        function selectRobot(id) {
+            hoverZones.forEach(z => z.classList.remove('active', 'locked'));
+            nameLabels.forEach(l => l.classList.remove('active'));
+            const zone = document.querySelector(`.hover-zone[data-id="${id}"]`);
+            const label = document.querySelector(`.robot-name-label[data-id="${id}"]`);
+            if (zone) { zone.classList.add('active', 'locked'); }
+            if (label) { label.classList.add('active'); }
+            imageContainer.classList.add('has-active');
+            lockedId = id;
+            updateStats(id);
+        }
+
+        function clearSelection() {
+            hoverZones.forEach(z => z.classList.remove('active', 'locked'));
+            nameLabels.forEach(l => l.classList.remove('active'));
+            imageContainer.classList.remove('has-active');
+            lockedId = null;
+        }
 
         hoverZones.forEach(zone => {
             zone.addEventListener('mouseenter', () => {
                 if (lockedId) return;
                 const id = zone.getAttribute('data-id');
                 hoverZones.forEach(z => z.classList.remove('active'));
+                nameLabels.forEach(l => l.classList.remove('active'));
                 zone.classList.add('active');
+                const label = document.querySelector(`.robot-name-label[data-id="${id}"]`);
+                if (label) label.classList.add('active');
                 imageContainer.classList.add('has-active');
                 updateStats(id);
             });
@@ -2014,20 +2096,27 @@
             zone.addEventListener('mouseleave', () => {
                 if (lockedId) return;
                 imageContainer.classList.remove('has-active');
+                nameLabels.forEach(l => l.classList.remove('active'));
             });
 
             zone.addEventListener('click', () => {
                 const id = zone.getAttribute('data-id');
                 if (lockedId === id) {
-                    lockedId = null;
-                    zone.classList.remove('locked');
-                    imageContainer.classList.remove('has-active');
+                    clearSelection();
                 } else {
-                    hoverZones.forEach(z => z.classList.remove('active', 'locked'));
-                    zone.classList.add('active', 'locked');
-                    lockedId = id;
-                    imageContainer.classList.add('has-active');
-                    updateStats(id);
+                    selectRobot(id);
+                }
+            });
+        });
+
+        // Name strip click handlers
+        nameLabels.forEach(label => {
+            label.addEventListener('click', () => {
+                const id = label.getAttribute('data-id');
+                if (lockedId === id) {
+                    clearSelection();
+                } else {
+                    selectRobot(id);
                 }
             });
         });
