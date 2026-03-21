@@ -42,8 +42,14 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        body {
             cursor: crosshair;
-            /* Experimental feel */
+        }
+
+        a, button, .hover-zone, .link-btn, [role="button"] {
+            cursor: pointer;
         }
 
         ::selection {
@@ -207,6 +213,7 @@
             height: 8px;
             background: var(--accent-alert);
             box-shadow: 0 0 10px var(--accent-alert);
+            animation: pulse-red 1.5s infinite;
         }
 
         @keyframes pulse-red {
@@ -223,22 +230,150 @@
             }
         }
 
-        /* Hero Redesign - Asymmetrical */
+        /* Hero Redesign - Dashboard */
         .hero {
-            padding: 8rem 0 4rem;
+            padding: 8rem 0 2rem;
             position: relative;
             overflow: hidden;
             border-bottom: 1px solid var(--border-raw);
         }
 
         .hero h1 {
-            font-size: 8vw;
+            font-size: 6vw;
             line-height: 0.85;
             color: var(--text-main);
             max-width: 90%;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             mix-blend-mode: exclusion;
         }
+
+        .hero-subtitle {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-data);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 2rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border: 1px solid var(--border-raw);
+            margin-top: 2rem;
+        }
+
+        .hero-stat {
+            padding: 1.5rem;
+            border-right: 1px solid var(--border-raw);
+            font-family: var(--font-mono);
+        }
+
+        .hero-stat:last-child { border-right: none; }
+
+        .hero-stat-label {
+            font-size: 0.65rem;
+            color: var(--text-data);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-stat-value {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--accent-acid);
+            line-height: 1;
+        }
+
+        .hero-stat-delta {
+            font-size: 0.65rem;
+            color: var(--accent-acid);
+            margin-top: 0.25rem;
+        }
+
+        /* Event Ticker */
+        .ticker-bar {
+            background: var(--bg-asphalt);
+            border-bottom: 1px solid var(--border-raw);
+            overflow: hidden;
+            white-space: nowrap;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-data);
+            padding: 0.6rem 0;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: ticker-scroll 40s linear infinite;
+        }
+
+        .ticker-content:hover {
+            animation-play-state: paused;
+        }
+
+        .ticker-item {
+            display: inline;
+            padding: 0 3rem;
+        }
+
+        .ticker-item .ticker-date {
+            color: var(--accent-acid);
+            margin-right: 0.5rem;
+        }
+
+        .ticker-item .ticker-dot {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-acid);
+            margin-right: 0.75rem;
+            vertical-align: middle;
+        }
+
+        @keyframes ticker-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Status badge glow effects */
+        .theme-production .status-badge {
+            box-shadow: 0 0 8px rgba(212, 255, 0, 0.3), inset 0 0 8px rgba(212, 255, 0, 0.1);
+        }
+
+        .theme-pilot .status-badge {
+            box-shadow: 0 0 8px rgba(0, 240, 255, 0.3), inset 0 0 8px rgba(0, 240, 255, 0.1);
+        }
+
+        .theme-prototype .status-badge {
+            box-shadow: 0 0 8px rgba(255, 42, 0, 0.3), inset 0 0 8px rgba(255, 42, 0, 0.1);
+        }
+
+        /* Data freshness indicator */
+        .data-freshness {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-data);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-raw);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .freshness-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .freshness-fresh { background: var(--accent-acid); }
+        .freshness-aging { background: #FFaa00; }
+        .freshness-stale { background: var(--accent-alert); }
 
         .hero-meta {
             display: flex;
@@ -247,7 +382,17 @@
             color: var(--text-muted);
             border-left: 2px solid var(--accent-acid);
             padding-left: 1.5rem;
-            margin-top: 4rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero-stat:nth-child(2) { border-right: none; }
+            .hero-stat:nth-child(1), .hero-stat:nth-child(2) {
+                border-bottom: 1px solid var(--border-raw);
+            }
         }
 
         /* Interactive Section */
@@ -318,6 +463,12 @@
             border: 1px solid var(--accent-acid);
             background: rgba(212, 255, 0, 0.05);
             cursor: pointer;
+        }
+
+        .hover-zone.locked {
+            border: 1px solid var(--accent-acid);
+            background: rgba(212, 255, 0, 0.08);
+            box-shadow: 0 0 12px rgba(212, 255, 0, 0.15);
         }
 
         .hover-tooltip {
@@ -622,7 +773,7 @@
         }
 
         .news-excerpt {
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-size: 0.9rem;
             line-height: 1.6;
         }
@@ -696,6 +847,11 @@
         .hand-bounce {
             font-size: 3rem;
             animation: bounce-left 1.5s infinite;
+        }
+
+        @keyframes bounce-left {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-12px); }
         }
 
         /* Video Section */
@@ -794,13 +950,54 @@
         </div>
     </header>
 
-    <!-- Hero -->
+    <!-- Hero Dashboard -->
     <section class="hero">
         <div class="decoration-line"></div>
         <div class="container">
+            <div class="hero-subtitle">FIG. 00 // HUMANOID ROBOTICS INTELLIGENCE DASHBOARD</div>
             <h1>EMBODIED<br>INTELLIGENCE</h1>
+
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-label">Units Tracked</div>
+                    <div class="hero-stat-value" id="stat-units">9</div>
+                    <div class="hero-stat-delta">across 8 companies</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-label">Production Ready</div>
+                    <div class="hero-stat-value" id="stat-production">2</div>
+                    <div class="hero-stat-delta">Atlas, Digit</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-label">Pilot Deployments</div>
+                    <div class="hero-stat-value" id="stat-pilot">4</div>
+                    <div class="hero-stat-delta">Figure, EVE, Optimus, Apollo</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-label">Latest Event</div>
+                    <div class="hero-stat-value" style="font-size:1.2rem; color: var(--text-main);">Figure $39B</div>
+                    <div class="hero-stat-delta">MAR 15, 2026</div>
+                </div>
+            </div>
         </div>
     </section>
+
+    <!-- Event Ticker -->
+    <div class="ticker-bar">
+        <div class="ticker-content" id="ticker">
+            <span class="ticker-item"><span class="ticker-dot"></span><span class="ticker-date">MAR 15</span> Figure AI valued at $39B in new funding round</span>
+            <span class="ticker-item"><span class="ticker-dot"></span><span class="ticker-date">MAR 03</span> Digit reaches 100K totes milestone at GXO</span>
+            <span class="ticker-item"><span class="ticker-dot"></span><span class="ticker-date">FEB 28</span> 1X NEO pre-orders sell out in 4 hours</span>
+            <span class="ticker-item"><span class="ticker-dot"></span><span class="ticker-date">FEB 12</span> Tesla Optimus Gen 3 hits 50 units/day production</span>
+            <span class="ticker-item"><span class="ticker-dot"></span><span class="ticker-date">JAN 07</span> Atlas electric goes commercial at CES 2026</span>
+            <!-- Duplicate for seamless loop -->
+            <span class="ticker-item"><span class="ticker-dot"></span><span class="ticker-date">MAR 15</span> Figure AI valued at $39B in new funding round</span>
+            <span class="ticker-item"><span class="ticker-dot"></span><span class="ticker-date">MAR 03</span> Digit reaches 100K totes milestone at GXO</span>
+            <span class="ticker-item"><span class="ticker-dot"></span><span class="ticker-date">FEB 28</span> 1X NEO pre-orders sell out in 4 hours</span>
+            <span class="ticker-item"><span class="ticker-dot"></span><span class="ticker-date">FEB 12</span> Tesla Optimus Gen 3 hits 50 units/day production</span>
+            <span class="ticker-item"><span class="ticker-dot"></span><span class="ticker-date">JAN 07</span> Atlas electric goes commercial at CES 2026</span>
+        </div>
+    </div>
 
     <!-- Main Interactive Section -->
     <section class="interactive-section" id="inventory">
@@ -852,7 +1049,7 @@
                     <div class="stats-placeholder">
                         <div class="hand-bounce" style="color:var(--accent-acid)">◀</div>
                         <h3>INITIALIZE DATA STREAM</h3>
-                        <p class="mono">HOVER TARGET TO SCAN</p>
+                        <p class="mono">HOVER OR TAP TARGET TO SCAN</p>
                     </div>
                 </div>
             </div>
@@ -873,6 +1070,7 @@
                     </div>
                     <div class="news-content">
                         <div class="news-tag">Breaking News</div>
+                        <time class="mono" style="font-size: 0.7rem; color: var(--text-data); display: block; margin-bottom: 0.5rem;">JAN 07, 2026</time>
                         <h3 class="news-title">Boston Dynamics Atlas Production Launch at CES 2026</h3>
                         <p class="news-excerpt">In a surprise keynote at CES 2026, Boston Dynamics announced the
                             immediate availability of the electric Atlas for commercial partners, backed by a massive
@@ -888,6 +1086,7 @@
                     </div>
                     <div class="news-content">
                         <div class="news-tag">Tesla</div>
+                        <time class="mono" style="font-size: 0.7rem; color: var(--text-data); display: block; margin-bottom: 0.5rem;">FEB 12, 2026</time>
                         <h3 class="news-title">Optimus Gen 3 Mass Production</h3>
                         <p class="news-excerpt">Fremont lines are now outputting 50 units/day with the new 22-DoF hand
                             design.</p>
@@ -901,6 +1100,7 @@
                     </div>
                     <div class="news-content">
                         <div class="news-tag">Agility</div>
+                        <time class="mono" style="font-size: 0.7rem; color: var(--text-data); display: block; margin-bottom: 0.5rem;">MAR 03, 2026</time>
                         <h3 class="news-title">Digit Hits 100K Totes</h3>
                         <p class="news-excerpt">GXO Logistics confirms Agility's Digit has moved its 100,000th tote with
                             zero failures.</p>
@@ -914,6 +1114,7 @@
                     </div>
                     <div class="news-content">
                         <div class="news-tag">Finance</div>
+                        <time class="mono" style="font-size: 0.7rem; color: var(--text-data); display: block; margin-bottom: 0.5rem;">MAR 15, 2026</time>
                         <h3 class="news-title">Figure AI $39B Valuation</h3>
                         <p class="news-excerpt">New funding round cements Figure as the most valuable private robotics
                             firm.</p>
@@ -927,6 +1128,7 @@
                     </div>
                     <div class="news-content">
                         <div class="news-tag">Consumer</div>
+                        <time class="mono" style="font-size: 0.7rem; color: var(--text-data); display: block; margin-bottom: 0.5rem;">FEB 28, 2026</time>
                         <h3 class="news-title">1X NEO Pre-orders</h3>
                         <p class="news-excerpt">At $20K, the home assistant robot sold out its initial batch of 10,000
                             units in 4 hours.</p>
@@ -991,7 +1193,7 @@
                 <p>TRACKING_EMBODIED_AI</p>
             </div>
             <div>
-                <p class="mono">LAST_UPDATE: JAN_2026</p>
+                <p class="mono" id="last-update">LAST_UPDATE: MAR_2026</p>
             </div>
         </div>
     </footer>
@@ -1005,6 +1207,7 @@
                 valuation: "$39B",
                 status: "Pilot Deployment",
                 theme: "theme-pilot",
+                dataVerified: "2026-03",
                 description: "Second-generation humanoid with end-to-end neural networks. Currently deployed at BMW manufacturing facilities for data collection and use case training.",
                 links: {
                     news: "https://www.figure.ai/",
@@ -1021,6 +1224,7 @@
                 valuation: "Undisclosed",
                 status: "Prototype",
                 theme: "theme-prototype",
+                dataVerified: "2026-02",
                 description: "Features industry-leading dexterity with human-like hands. Powered by Carbon AI control system for general-purpose work tasks.",
                 links: {
                     news: "https://sanctuary.ai/resources/news/",
@@ -1037,6 +1241,7 @@
                 valuation: "Hyundai Owned",
                 status: "Production Ready", // Per user context "Production Launch"
                 theme: "theme-production",
+                dataVerified: "2026-03",
                 description: "Fully electric commercial robot designed for real-world applications. Stronger, more agile, and completely untethered compared to hydraulic predecessor.",
                 links: {
                     news: "https://bostondynamics.com/atlas/",
@@ -1053,6 +1258,7 @@
                 valuation: "Series A",
                 status: "Prototype",
                 theme: "theme-prototype",
+                dataVerified: "2025-11",
                 description: "Specialized for rehabilitation and elderly care with high payload capacity. Capable of carrying patients from bed to wheelchair.",
                 links: {
                     news: "https://www.fftai.com/products-gr1",
@@ -1069,6 +1275,7 @@
                 valuation: "$1B+",
                 status: "Production Ready",
                 theme: "theme-production",
+                dataVerified: "2026-03",
                 description: "First commercially available humanoid focused on logistics. Successfully moving totes in GXO and Amazon warehouses with high reliability.",
                 links: {
                     news: "https://agilityrobotics.com/",
@@ -1085,6 +1292,7 @@
                 valuation: "Series B",
                 status: "Pilot Deployment",
                 theme: "theme-pilot",
+                dataVerified: "2026-01",
                 description: "Wheeled android designed for security and guarding tasks. Deployed commercially with ADT for patrolling and surveillance duties.",
                 links: {
                     news: "https://www.1x.tech/eve",
@@ -1101,6 +1309,7 @@
                 valuation: "Series B",
                 status: "Pre-order",
                 theme: "theme-prototype",
+                dataVerified: "2026-02",
                 description: "Consumer-focused android with soft outer shell for safety. Designed for home assistance tasks like cleaning and organizing.",
                 links: {
                     news: "https://www.1x.tech/neo",
@@ -1117,6 +1326,7 @@
                 valuation: "Internal",
                 status: "Pilot Deployment", // Mass production scheduled
                 theme: "theme-pilot",
+                dataVerified: "2026-03",
                 description: "Tesla's general purpose humanoid using FSD AI stack. Gen 3 features improved 22-DoF hands and lighter weight design.",
                 links: {
                     news: "https://www.tesla.com/AI",
@@ -1133,6 +1343,7 @@
                 valuation: "$1B+",
                 status: "Pilot Deployment",
                 theme: "theme-pilot",
+                dataVerified: "2026-01",
                 description: "NASA-heritage design built for mass manufacturability. Modular tooling allows it to adapt to various industrial tasks.",
                 links: {
                     news: "https://apptronik.com/apollo",
@@ -1146,6 +1357,16 @@
 
         const statsPanel = document.getElementById('stats-content');
         const hoverZones = document.querySelectorAll('.hover-zone');
+
+        function getFreshnessClass(dateStr) {
+            if (!dateStr) return 'freshness-stale';
+            const now = new Date();
+            const verified = new Date(dateStr + '-01');
+            const monthsDiff = (now.getFullYear() - verified.getFullYear()) * 12 + (now.getMonth() - verified.getMonth());
+            if (monthsDiff <= 1) return 'freshness-fresh';
+            if (monthsDiff <= 3) return 'freshness-aging';
+            return 'freshness-stale';
+        }
 
         function updateStats(id) {
             const robot = robotsData[id];
@@ -1218,21 +1439,42 @@
                             <span>▶️</span> Watch Demo
                         </a>
                     </div>
+
+                    <div class="data-freshness">
+                        <span class="freshness-dot ${getFreshnessClass(robot.dataVerified)}"></span>
+                        DATA_VERIFIED: ${robot.dataVerified || 'UNKNOWN'}
+                    </div>
                 </div>
             `;
 
             statsPanel.innerHTML = html;
         }
 
+        let lockedId = null;
+
         hoverZones.forEach(zone => {
             zone.addEventListener('mouseenter', () => {
+                if (lockedId) return; // Don't override locked selection
                 const id = zone.getAttribute('data-id');
-                // Remove active class from all
                 hoverZones.forEach(z => z.classList.remove('active'));
-                // Add to current
                 zone.classList.add('active');
-
                 updateStats(id);
+            });
+
+            // Click to lock/unlock selection (enables mobile + persistent viewing)
+            zone.addEventListener('click', () => {
+                const id = zone.getAttribute('data-id');
+                if (lockedId === id) {
+                    // Clicking same robot unlocks
+                    lockedId = null;
+                    zone.classList.remove('locked');
+                } else {
+                    // Lock new selection
+                    hoverZones.forEach(z => z.classList.remove('active', 'locked'));
+                    zone.classList.add('active', 'locked');
+                    lockedId = id;
+                    updateStats(id);
+                }
             });
         });
     </script>
