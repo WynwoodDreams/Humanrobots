@@ -7,8 +7,8 @@
     <title>RobotHub | The Rise of Humanoid Robots 2026</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     <script src="https://unpkg.com/lucide-react@0.263.1/dist/umd/lucide-react.min.js"></script>
@@ -114,7 +114,7 @@
                 emoji: "🚀", valuation: "$1B+", status: "Pilot Deployment", theme: "text-orange-400 border-orange-400",
                 desc: "NASA-heritage design built for mass manufacturability.",
                 specs: { height: "1.73m", weight: "73kg", payload: "25kg", dof: "30+" },
-                metrics: { speed: 70, battery: "4h" },
+                metrics: { speed: 70, battery: 75 },
                 tags: ["NASA Heritage", "Mercedes Partner", "Modular"]
             }
         ];
@@ -317,7 +317,7 @@
                                 {videos.map((vid, i) => (
                                     <div key={i} className="border border-[#333] p-1 bg-[#111]">
                                         <div className="aspect-video relative">
-                                            <iframe src={vid.url} className="absolute inset-0 w-full h-full" frameBorder="0" allowFullScreen></iframe>
+                                            <iframe src={vid.url} className="absolute inset-0 w-full h-full border-0" loading="lazy" allowFullScreen></iframe>
                                         </div>
                                         <h4 className="font-mono text-sm p-4 text-center">{vid.title}</h4>
                                     </div>
